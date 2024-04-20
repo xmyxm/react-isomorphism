@@ -1,0 +1,109 @@
+{
+	"name": "react-isomorphism",
+	"version": "0.0.1",
+	"description": "webpack + babel + react + jest + eslint 脚手架",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node app.js",
+		"dev": "node app.js dev-server",
+		"update": "node ./server/util/seolink.js",
+		"build": "webpack --config ./webpack/webpack.pro.config.js && webpack --config ./webpack/webpack.server.config.js && npx tsc --outFile ./dist/server/notegroup.js ./menu/notegroup.ts",
+		"lint": "eslint src --fix --ext .ts --ext .tsx ",
+		"prepare": "husky install"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged",
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+		}
+	},
+	"lint-staged": {
+		"*.{js,css,less,ts,tsx,md}": "prettier --write"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/xmyxm/web-little.git"
+	},
+	"keywords": [
+		"webpack",
+		"babel",
+		"react",
+		"typescript",
+		"eslint"
+	],
+	"author": "xmyxm",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/xmyxm/web-little/issues"
+	},
+	"homepage": "https://github.com/xmyxm/web-little#readme",
+	"devDependencies": {
+		"@babel/cli": "^7.13.16",
+		"@babel/core": "^7.14.0",
+		"@babel/plugin-proposal-class-properties": "^7.13.0",
+		"@babel/plugin-transform-runtime": "^7.13.15",
+		"@babel/preset-env": "^7.14.0",
+		"@babel/preset-react": "^7.13.13",
+		"@babel/preset-typescript": "^7.13.0",
+		"@babel/runtime": "^7.14.0",
+		"@commitlint/cli": "^16.2.1",
+		"@commitlint/config-conventional": "^16.2.1",
+		"@typescript-eslint/eslint-plugin": "^5.12.1",
+		"@typescript-eslint/parser": "^5.12.1",
+		"autoprefixer": "^10.2.5",
+		"babel-loader": "^8.2.2",
+		"browserslist": "^4.16.6",
+		"cheerio": "^1.0.0-rc.10",
+		"clean-webpack-plugin": "^4.0.0-alpha.0",
+		"core-js": "^3.11.1",
+		"css-loader": "^5.2.4",
+		"eslint": "^8.9.0",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-prettier": "^8.4.0",
+		"eslint-import-resolver-webpack": "^0.13.2",
+		"eslint-plugin-html": "^6.2.0",
+		"eslint-plugin-import": "^2.25.4",
+		"eslint-plugin-markdown": "^2.2.1",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-react": "^7.28.0",
+		"file-loader": "^6.2.0",
+		"html-loader": "^2.1.2",
+		"html-webpack-plugin": "^5.5.0",
+		"husky": "^7.0.4",
+		"ignore-loader": "^0.1.2",
+		"less": "^4.1.1",
+		"less-loader": "^8.1.1",
+		"lint-staged": "^12.3.4",
+		"mini-css-extract-plugin": "^1.6.0",
+		"open": "^6.4.0",
+		"postcss": "^8.2.13",
+		"postcss-loader": "^5.2.0",
+		"prettier": "^2.2.1",
+		"style-loader": "^2.0.0",
+		"ts-loader": "^9.1.1",
+		"typescript": "^4.5.5",
+		"url-loader": "^4.1.1",
+		"webpack": "^5.36.2",
+		"webpack-bundle-analyzer": "^4.4.2",
+		"webpack-cli": "^4.6.0",
+		"webpack-dev-server": "^3.11.2"
+	},
+	"dependencies": {
+		"axios": "^0.21.1",
+		"https": "^1.0.0",
+		"jsdom": "^19.0.0",
+		"koa": "^2.13.4",
+		"koa-bodyparser": "^4.3.0",
+		"koa-conditional-get": "^3.0.0",
+		"koa-router": "^10.1.1",
+		"koa-sslify": "^5.0.0",
+		"koa-static": "^5.0.0",
+		"lz-string": "^1.4.4",
+		"markdown-it": "^12.3.0",
+		"prop-types": "^15.7.2",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"spark-md5": "^3.0.2"
+	}
+}
