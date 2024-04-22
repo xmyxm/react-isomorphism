@@ -4,7 +4,7 @@
 	"description": "webpack + babel + react + jest + eslint 脚手架",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"rundev": "webpack --config ./webpack/webpack.beta.config.js && webpack --config ./webpack/webpack.server.config.js &&",
 		"start": "node app.js",
 		"dev": "node app.js dev-server",
 		"update": "node ./server/util/seolink.js",
