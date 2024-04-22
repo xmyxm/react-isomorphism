@@ -1,0 +1,225 @@
+/** @format */
+
+@import './reset.less';
+
+@media screen and (max-width: 800px) {
+	.note-page {
+		margin: 15px 0 0 !important;
+
+		.menu-open {
+			right: 15px !important;
+		}
+	}
+
+	.markdown-here-wrapper img {
+		width: 100% !important;
+	}
+}
+
+.note-page {
+	display: flex;
+	justify-content: flex-start;
+	height: calc(100vh - 58px);
+	margin: 24px 100px 0;
+
+	.menu {
+		width: 200px;
+		overflow: scroll;
+		color: #333639;
+		padding-left: 15px;
+		padding-bottom: 15px;
+		border-right: 1px dashed #e1e1e1;
+
+		.menu-title {
+			line-height: 42px;
+			font-size: 14px;
+			display: flex;
+			align-items: center;
+			opacity: 0.6;
+			cursor: pointer;
+
+			&:hover {
+				opacity: 1;
+				font-weight: bold;
+			}
+		}
+
+		.menu-icon {
+			display: inline-block;
+			width: 16px;
+			height: 16px;
+			margin-right: 5px;
+		}
+
+		.menu-note {
+			line-height: 24px;
+			font-size: 12px;
+			display: flex;
+			align-items: center;
+			opacity: 0.6;
+			cursor: pointer;
+			margin-left: 15px;
+			margin-right: 15px;
+
+			&:hover {
+				opacity: 1;
+				font-weight: bold;
+			}
+		}
+
+		.book-icon {
+			background-image: url(//p0.meituan.net/scarlett/e436ef194e4a94144881b26f10bbf70a446.png);
+			background-size: 100%;
+			width: 16px;
+			height: 16px;
+			margin-right: 5px;
+		}
+
+		.book-name {
+			flex: 1;
+			width: 0;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			pointer-events: none;
+			color: rgb(51, 54, 57);
+		}
+
+		.open,
+		.select {
+			opacity: 1;
+		}
+
+		.select {
+			font-weight: bold;
+		}
+	}
+
+	.content {
+		flex: 1;
+		overflow: scroll;
+		position: relative;
+		padding-bottom: 15px;
+		padding-top: 10px;
+
+		.content-uptime {
+			position: absolute;
+			right: 15px;
+			top: 40px;
+			color: #565a5f;
+			font-size: 12px;
+		}
+
+		.no-content {
+			margin: 150px auto;
+			width: 100px;
+
+			.icon-404,
+			.icon-500 {
+				background-size: 100%;
+				width: 32px;
+				height: 32px;
+				margin: 10px auto;
+			}
+
+			.icon-404 {
+				background-image: url(//p0.meituan.net/scarlett/315db1a0c8f3f5277c47378d2e1d037e984.png);
+			}
+
+			.icon-500 {
+				background-image: url(//p1.meituan.net/scarlett/71f9b6d2fb2179622e7afeb128ec178c488.png);
+			}
+
+			.text-font {
+				color: #807e7e;
+			}
+		}
+
+		.load-box .loading .loader {
+			color: #000000;
+			font-size: 5px;
+			margin: 100px auto;
+			width: 1em;
+			height: 1em;
+			border-radius: 50%;
+			position: relative;
+			text-indent: -9999em;
+			animation: loading 1.3s infinite linear;
+			transform: translateZ(0);
+		}
+	}
+
+	.menu,
+	.content {
+		&::-webkit-scrollbar {
+			width: 6px;
+			height: 6px;
+			background: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: transparent;
+			border-radius: 4px;
+		}
+
+		&:hover::-webkit-scrollbar-thumb {
+			background: hsla(0, 0%, 53%, 0.4);
+		}
+
+		&:hover::-webkit-scrollbar-track {
+			background: hsla(0, 0%, 53%, 0.1);
+		}
+	}
+
+	.menu-open {
+		display: flex;
+		position: fixed;
+		right: 108px;
+		bottom: 15px;
+		width: 30px;
+		height: 30px;
+		background-color: #000;
+		color: #fff;
+		border-radius: 50%;
+		cursor: pointer;
+		justify-content: center;
+		align-items: center;
+		font-size: 12px;
+	}
+}
+
+@keyframes loading {
+	0%,
+	100% {
+		box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em,
+			-3em 0 0 -1em, -2em -2em 0 0;
+	}
+	12.5% {
+		box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em,
+			-3em 0 0 -1em, -2em -2em 0 -1em;
+	}
+	25% {
+		box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em,
+			-3em 0 0 -1em, -2em -2em 0 -1em;
+	}
+	37.5% {
+		box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em,
+			-3em 0em 0 -1em, -2em -2em 0 -1em;
+	}
+	50% {
+		box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0,
+			-3em 0em 0 -1em, -2em -2em 0 -1em;
+	}
+	62.5% {
+		box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em,
+			-3em 0 0 0, -2em -2em 0 -1em;
+	}
+	75% {
+		box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0,
+			-3em 0em 0 0.2em, -2em -2em 0 0;
+	}
+	87.5% {
+		box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0,
+			-3em 0em 0 0, -2em -2em 0 0.2em;
+	}
+}

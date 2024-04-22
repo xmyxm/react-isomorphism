@@ -1,0 +1,44 @@
+/** @format */
+@hig: 34px;
+
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: @hig;
+	padding: 0 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 100;
+	background: #f1f1f1;
+	color: #000;
+	font-size: 14px;
+	font-weight: 400;
+
+	.title {
+		text-align: center;
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+
+		.logo-icon {
+			background-image: url(//p1.meituan.net/scarlett/b5e2990198fc9379a24d4f837eba41d7668.png);
+			background-size: 100%;
+			width: 16px;
+			height: 16px;
+			margin-right: 6px;
+			border-radius: 50%;
+			background-color: #000;
+		}
+	}
+
+	.time {
+		cursor: pointer;
+	}
+}
+
+.headerbox {
+	height: @hig;
+}
