@@ -15,12 +15,13 @@ module.exports = {
 		location: true,
 		fetch: true,
 	},
-	// 所有的规则默认都是禁用的。在配置文件中，使用 "extends": "eslint:recommended" 来启用推荐的规则，报告一些常见的问题
+	// extends 属性的优先级较低,如果在 rules 属性中定义了相同的规则,则会覆盖 extends 中继承的规则。另外,extends 中的配置源会按照数组顺序由左到右的优先级合并配置
 	extends: [
 		'airbnb-base',
-		'plugin:@typescript-eslint/recommended', // 这是一个ESLint插件，包含了各类定义好的检测Typescript代码的规范
+		'eslint:recommended', // 这是一个ESLint插件，包含了各类定义好的检测Typescript代码的规范
 		'plugin:react/recommended',
-		'plugin:prettier/recommended', // 启用eslint-plugin-prettier和eslint-config-prettier。且设置了"prettier/prettier"规则为"error"
+		'prettier', // 使用 eslint-config-prettier 将所有与 Prettier 冲突的 ESLint 规则禁用掉。这样,Prettier 就可以完全控制代码格式化的样式,而不会与 ESLint 产生冲突
+		'plugin:prettier/recommended', // 表示使用 eslint-plugin-prettier 插件提供的推荐规则集
 	],
 	// ESLint 默认使用Espree作为其解析器，@typescript-eslint/parser作为ESLint的解析器，用于解析typescript，从而检查和规范Typescript代码
 	parser: '@typescript-eslint/parser',
@@ -36,6 +37,7 @@ module.exports = {
 	// 通常输出规则。一些插件也可以输出一个或多个命名的配置。ESLint 支持使用第三方插件。在使用插件之前，你必须使用 npm 安装它。插件名称可以省略 eslint-plugin- 前缀
 	plugins: [
 		'@typescript-eslint',
+		'prettier', // 启用 eslint-plugin-prettier 插件，,它将 Prettier 作为一个 ESLint 规则来运行，它并不会禁用任何 ESLint 规则,而是在代码格式化方面使用 Prettier 的规则。
 		'react',
 		'html',
 		'markdown', // eslint-plugin-markdown 可以检查 Markdown、 HTML以及其它语言文件中的代码
@@ -56,31 +58,7 @@ module.exports = {
 		'@typescript-eslint/no-var-requires': 'off',
 		'import/extensions': 'off',
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-		'prettier/prettier': [
-			// 配置 Prettier 规则
-			'error',
-			// 针对会被 ESLint 格式化的文件类型，Prettier 会作为 ESLint 的一个规则运行并格式化文件，因此需要添加如下配置
-			{
-				// 排版宽度即每行最大宽度。默认值是 80
-				printWidth: 120,
-				// 去掉代码结尾的分号
-				semi: true,
-				// 使用带引号替代双引号
-				singleQuote: true,
-				// 为多行数组的非末尾行添加逗号
-				trailingComma: 'all',
-				// 在对象字面量和括号之间添加空格
-				bracketSpacing: true,
-				// 箭头函数圆括号，"avoid" - 在可以消除的情况下，消除括号；"always" - 一直保留括号
-				arrowParens: 'avoid',
-				// Prettier 支持在一个文件的头部设置约束，仅格式化那些包含「特殊注释」的文件，这种约束称为「 pragma 编译附注」，/** @format */
-				insertPragma: false,
-				// 制表符宽度，每个层级缩进几个空格。默认值 2
-				tabWidth: 4,
-				// 是否使用 tab 代替 space(空格) 为单位缩进，默认 false
-				useTabs: true,
-			},
-		],
+		'prettier/prettier': ['error'], // 配置 eslint-plugin-prettier 规则，这意味着任何不符合 Prettier 风格的代码都会被标记为错误
 	},
 	settings: {
 		// 自动发现React的版本，从而进行规范react代码
