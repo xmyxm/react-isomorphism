@@ -1,9 +1,9 @@
 const fs = require('fs');
 const cheerio = require('cheerio');
-const indexPage = require('../../../dist/server/index.js');
 
 module.exports = function index(ctx) {
-	const contentHtml = indexPage.default();
+	// eslint-disable-next-line global-require
+	const contentHtml = require('../../../dist/server/index.js').default();
 	const filePath = './dist/client/index.html';
 	if (fs.existsSync(filePath)) {
 		const pageHtml = fs.readFileSync(filePath, 'utf-8');

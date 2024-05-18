@@ -3,7 +3,6 @@ const LZString = require('lz-string');
 const userList = require('../../config/user');
 const getTime = require('../../util/util');
 const print = require('../../util/print-log');
-const noteGroup = require('../../../dist/server/notegroup');
 
 const cacheData = {};
 
@@ -78,7 +77,8 @@ function getNoteMenuList(userInfo, address) {
 
 	// 菜单默认都展开
 	const open = true;
-
+	// eslint-disable-next-line global-require
+	const noteGroup = require('../../../dist/server/notegroup');
 	const menuList = Object.keys(noteGroup.group)
 		.map(key => {
 			const { icon, noteList } = noteGroup.group[key];
@@ -150,6 +150,8 @@ function getNoteDetail(filePath) {
 function identityCheck(address, userInfo) {
 	if (userInfo) return true;
 	const [groupName, fileName] = address.split('/');
+	// eslint-disable-next-line global-require
+	const noteGroup = require('../../../dist/server/notegroup');
 	const { noteList } = noteGroup.group[groupName];
 	const noteInfo = noteList.find(item => !item.hide && !item.hideContent && item.fileName === fileName);
 	return !!noteInfo;

@@ -2,7 +2,6 @@ import React from 'react';
 import Header from '../component/header';
 import Footer from '../component/footer';
 import '../style/index.less';
-import '../style/csshake.less';
 
 export function Index() {
 	return (

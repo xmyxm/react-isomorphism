@@ -1,10 +1,10 @@
 const fs = require('fs');
 const { JSDOM } = require('jsdom');
-const notePage = require('../../../dist/server/note.js');
 
 module.exports = async function index(ctx) {
 	try {
-		const { data, html } = await notePage.default(ctx);
+		// eslint-disable-next-line global-require
+		const { data, html } = await require('../../../dist/server/note.js').default(ctx);
 		const filePath = './dist/client/note.html';
 		if (fs.existsSync(filePath)) {
 			const pageHtml = fs.readFileSync(filePath, 'utf-8');
