@@ -35,7 +35,7 @@ async function run() {
     
     print.info(`${getTime()} 打印环境参数：${env};`);
 
-    const clientCompiler = webpack(env !== RUN_ENV.PRO ? proConfig : betaConfig);
+    const clientCompiler = webpack(env === RUN_ENV.PRO ? proConfig : betaConfig);
     const serverCompiler = webpack(serverConfig);
 
     if(env === RUN_ENV.DEV) {
