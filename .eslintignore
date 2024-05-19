@@ -5,3 +5,4 @@ postcss.config.js
 webpack/
 lib/
 util/
+dist/
