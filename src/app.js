@@ -36,7 +36,7 @@ async function run() {
 	print.info(`${getTime()} 打印环境参数：${env};`);
 
 	const clientCompiler = webpack(env === RUN_ENV.PRO ? proConfig : betaConfig);
-	const serverCompiler = webpack(serverConfig);
+	// const serverCompiler = webpack(serverConfig);
 
 	if (env === RUN_ENV.DEV) {
 		print.info(`${getTime()} ${env} 环境开始编译`);
@@ -54,7 +54,7 @@ async function run() {
 
 	return {
 		clientCompiler,
-		serverCompiler,
+		// serverCompiler,
 		serverPort,
 		env,
 	};
