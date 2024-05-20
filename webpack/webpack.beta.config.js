@@ -28,7 +28,7 @@ config.devServer = {
 	allowedHosts: 'all', //允许将允许访问开发服务器的服务列入白名单
 	static: {
 		directory: config.output.path,
-		publicPath: '/serve-public-path-url',
+		publicPath: '/servepublic',
 	},
 	client: {
 		progress: true, // 在浏览器中以百分比显示编译进度
