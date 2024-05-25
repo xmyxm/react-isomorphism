@@ -1,4 +1,4 @@
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const config = require('./webpack.base.config.js')
 
 config.mode = 'development'
@@ -49,10 +49,10 @@ config.devServer = {
 }
 
 // 体积分析插件
-config.plugins.push(
-	new BundleAnalyzerPlugin({
-		openAnalyzer: false, // 是否自动打开报告页面，默认为 true
-	}),
-)
+// config.plugins.push(
+// 	new BundleAnalyzerPlugin({
+// 		openAnalyzer: false, // 是否自动打开报告页面，默认为 true
+// 	}),
+// )
 
 module.exports = config
