@@ -1,7 +1,7 @@
-const webpack = require('webpack');
-const path = require('path');
-const BuildDonePlugin = require('./plugins/builddone');
-const packageFilePath = path.join(__dirname, '../dist/server');
+const webpack = require('webpack')
+const path = require('path')
+const BuildDonePlugin = require('./plugins/builddone')
+const packageFilePath = path.join(__dirname, '../dist/server')
 
 module.exports = {
 	entry: {
@@ -70,4 +70,4 @@ module.exports = {
 		new BuildDonePlugin({ text: '编译完成' }),
 		//    new webpack.BannerPlugin('@web-little'),
 	],
-};
+}

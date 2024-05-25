@@ -1,8 +1,8 @@
 module.exports = {
 	// 排版宽度即每行最大宽度。默认值是 80
 	printWidth: 120,
-	// 去掉代码结尾的分号
-	semi: true,
+	// 代码结尾分号
+	semi: false,
 	// 使用带引号替代双引号
 	singleQuote: true,
 	// 为多行数组的非末尾行添加逗号

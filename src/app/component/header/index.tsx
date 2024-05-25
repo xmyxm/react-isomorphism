@@ -1,24 +1,24 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { getDateNowText } from '../../util/util';
-import './index.less';
+import React, { useEffect, useState, useCallback } from 'react'
+import { getDateNowText } from '../../util/util'
+import './index.less'
 
 export interface Props {
-	title?: string;
+	title?: string
 }
 
 export default function Header(props: Props): Element {
-	const { title = '书签' } = props;
-	const [dateText, setDateText] = useState(getDateNowText());
+	const { title = '书签' } = props
+	const [dateText, setDateText] = useState(getDateNowText())
 
 	useEffect(() => {
 		setTimeout(() => {
-			setDateText(getDateNowText());
-		}, 1000);
-	}, [dateText]);
+			setDateText(getDateNowText())
+		}, 1000)
+	}, [dateText])
 
 	const goHome = useCallback(() => {
-		window.location.href = location.origin;
-	}, []);
+		window.location.href = location.origin
+	}, [])
 
 	return (
 		<React.Fragment>
@@ -31,5 +31,5 @@ export default function Header(props: Props): Element {
 			</header>
 			<div className="headerbox"></div>
 		</React.Fragment>
-	);
+	)
 }

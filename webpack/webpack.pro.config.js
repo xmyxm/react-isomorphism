@@ -1,10 +1,10 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin'); //webpack插件，用于清除目录文件
-const config = require('./webpack.base.config.js');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin') //webpack插件，用于清除目录文件
+const config = require('./webpack.base.config.js')
 
-config.mode = 'production';
-config.devtool = 'nosources-source-map';
+config.mode = 'production'
+config.devtool = 'nosources-source-map'
 config.module.rules.push(
 	{
 		test: /\.(less|css)$/,
@@ -31,16 +31,16 @@ config.module.rules.push(
 			},
 		],
 	},
-);
+)
 config.plugins.push(
 	new CleanWebpackPlugin(), // 默认删除webpack output.path目录中的所有文件
 	// css文件抽离设置
 	new MiniCssExtractPlugin({
 		filename: 'css/[name].[contenthash].css',
 	}),
-);
+)
 
 // 体积分析插件
 // config.plugins.push(new BundleAnalyzerPlugin())
 
-module.exports = config;
+module.exports = config

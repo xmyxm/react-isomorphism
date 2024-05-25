@@ -1,5 +1,5 @@
-import React from 'react';
-import './index.less';
+import React from 'react'
+import './index.less'
 
 export default function Footer(): Element {
 	return (
@@ -10,5 +10,5 @@ export default function Footer(): Element {
 				</a>
 			</footer>
 		</React.Fragment>
-	);
+	)
 }

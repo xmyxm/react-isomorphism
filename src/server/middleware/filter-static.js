@@ -1,10 +1,10 @@
-const serve = require('koa-static');
-const path = require('path');
+const serve = require('koa-static')
+const path = require('path')
 
 // 开启 gzip
-const gzip = true;
+const gzip = true
 // 浏览器缓存 max-age 以毫秒为单位，设置强缓存有效期 10s
-const maxage = 1000 * 10;
+const maxage = 1000 * 10
 
 // 静态资源服务
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
 		gzip,
 		maxage,
 		setHeaders: res => {
-			console.log(`写入请求头: ${res.path}`);
+			console.log(`写入请求头: ${res.path}`)
 		},
 	}),
 	commonStatic: serve(path.resolve(__dirname, '../../webfile/'), {
@@ -21,7 +21,7 @@ module.exports = {
 		gzip,
 		maxage,
 		setHeaders: res => {
-			console.log(`写入请求头: ${res.path}`);
+			console.log(`写入请求头: ${res.path}`)
 		},
 	}),
-};
+}

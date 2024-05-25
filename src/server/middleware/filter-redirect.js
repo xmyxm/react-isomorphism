@@ -2,16 +2,16 @@
 async function redirect(ctx, next) {
 	try {
 		// 执行后代的代码
-		await next();
+		await next()
 		if (!ctx.body && !ctx.req.complete) {
 			// 没有资源
-			ctx.status = 302;
-			ctx.redirect('/index.html');
+			ctx.status = 302
+			ctx.redirect('/index.html')
 		}
 	} catch (e) {
 		// 如果后面的代码报错 返回500
-		ctx.body = '500';
+		ctx.body = '500'
 	}
 }
 
-module.exports = redirect;
+module.exports = redirect

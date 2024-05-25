@@ -11,7 +11,7 @@ const WebpackDevServer = require('webpack-dev-server');
 const { default: enforceHttps } = require('koa-sslify');
 const devMiddleware = require('webpack-dev-middleware');
 const hotMiddleware = require('webpack-hot-middleware');
-const serverConfig = require('../webpack/webpack.server.config');
+const serverConfig = require('../webpack/webpack.server.beta.config');
 const staticServer = require('./server/middleware/filter-static');
 const redirect = require('./server/middleware/filter-redirect');
 const betaConfig = require('../webpack/webpack.beta.config');
@@ -26,6 +26,8 @@ const { argv } = process;
 let serverPort = 443;
 // 环境判断
 let env = RUN_ENV.PRO;
+
+let httpServer = null
 
 if (argv.length === 3 && argv[2] === 'dev') {
 	serverPort = 8080;
@@ -46,6 +48,7 @@ server.startCallback(err => {
 const serverCompiler = webpack(serverConfig);
 
 const app = new Koa();
+
 const router = new Router();
 // 强制 https
 if (serverPort === 443) {
@@ -60,15 +63,18 @@ app.use(staticServer.commonStatic);
 if (env === RUN_ENV.BETA) {
 	// 将所有请求代理到 Webpack 开发服务器
 	app.use(
-		proxy('/servepublic', {
+		proxy('/clientpublic', {
 			target: 'http://localhost:3000',
-			pathRewrite: { '^/servepublic': '' },
+			pathRewrite: { '^/clientpublic': '' },
 		}),
 	);
 	// 使用 webpack-dev-middleware 中间件
 	app.use(
 		devMiddleware(serverCompiler, {
 			publicPath: serverConfig.output.publicPath,
+			stats: 'errors-only', // 设置 stats 选项
+			// writeToDisk: true, // 将文件写入磁盘
+			serverSideRender: true // 指示模块启用服务器端渲染模式
 		}),
 	);
 
@@ -99,6 +105,19 @@ app.use(actionAPI);
 app.use(router.routes());
 // 重定向路由
 app.use(redirect);
+if (env === RUN_ENV.BETA) {
+// 当 webpack 编译器发生变化时，重新启动服务器
+serverCompiler.plugin('compilation', (compilation) => {
+	compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
+		httpServer.close(() => {
+		httpServer.listen(serverPort, () => {
+		  console.log('Server restarted');
+		  cb();
+		});
+	  });
+	});
+  });
+}
 // 启动监听端口
 if (serverPort === 443) {
 	// ssl 文件
@@ -107,7 +126,7 @@ if (serverPort === 443) {
 		cert: fs.readFileSync('./server/config/ssl/www.qqweb.top.pem'),
 	};
 	https.createServer(options, app.callback()).listen(serverPort);
-	http.createServer(app.callback()).listen(80);
+	httpServer = http.createServer(app.callback()).listen(80);
 } else {
-	http.createServer(app.callback()).listen(serverPort);
+	httpServer = http.createServer(app.callback()).listen(serverPort);
 }

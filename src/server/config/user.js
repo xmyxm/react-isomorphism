@@ -1,1 +1,1 @@
-module.exports = [{ name: 'myco_xmy', pw: 'qqweb', hash: '' }];
+module.exports = [{ name: 'myco_xmy', pw: 'qqweb', hash: '' }]

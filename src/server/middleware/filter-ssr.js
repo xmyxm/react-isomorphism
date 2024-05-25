@@ -1,16 +1,16 @@
-const indexPage = require('../action/page/index');
-const notePage = require('../action/page/note');
+const indexPage = require('../action/page/index')
+const notePage = require('../action/page/note')
 
 // 页面优先走ssl逻辑
 async function pageSSR(ctx, next) {
-	const urlPath = ctx.path;
+	const urlPath = ctx.path
 	if (['', '/', '/index'].indexOf(urlPath) > -1) {
-		indexPage(ctx);
+		indexPage(ctx)
 	} else if (['/note'].indexOf(urlPath) > -1) {
-		await notePage(ctx);
+		await notePage(ctx)
 	} else {
-		next();
+		next()
 	}
 }
 
-module.exports = pageSSR;
+module.exports = pageSSR
