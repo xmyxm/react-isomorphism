@@ -59,6 +59,7 @@ module.exports = {
 		'import/extensions': 'off',
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
 		'prettier/prettier': ['error'], // 配置 eslint-plugin-prettier 规则，这意味着任何不符合 Prettier 风格的代码都会被标记为错误
+		semi: ['error', 'never'],
 	},
 	settings: {
 		// 自动发现React的版本，从而进行规范react代码
