@@ -70,7 +70,7 @@ if (env === RUN_ENV.BETA) {
 	);
 	// 使用 webpack-dev-middleware 中间件
 	app.use(
-		devMiddleware(serverCompiler, {
+		devMiddleware.koaWrapper(serverCompiler, {
 			publicPath: serverConfig.output.publicPath,
 			stats: 'errors-only', // 设置 stats 选项
 			// writeToDisk: true, // 将文件写入磁盘
