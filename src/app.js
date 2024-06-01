@@ -1,65 +1,65 @@
-const fs = require('fs');
-const Koa = require('koa');
-const http = require('http');
-const https = require('https');
-const webpack = require('webpack');
-const Router = require('koa-router');
-const bodyParser = require('koa-bodyparser');
-const proxy = require('http-proxy-middleware');
-const conditional = require('koa-conditional-get');
-const WebpackDevServer = require('webpack-dev-server');
-const { default: enforceHttps } = require('koa-sslify');
-const devMiddleware = require('webpack-dev-middleware');
-const hotMiddleware = require('webpack-hot-middleware');
-const serverConfig = require('../webpack/webpack.server.beta.config');
-const staticServer = require('./server/middleware/filter-static');
-const redirect = require('./server/middleware/filter-redirect');
-const betaConfig = require('../webpack/webpack.beta.config');
-const pageSSR = require('./server/middleware/filter-ssr');
-const actionAPI = require('./server/action/index');
-const print = require('./server/util/print-log');
-const RUN_ENV = require('./server/util/run-env');
-const getTime = require('./server/util/util');
+const fs = require('fs')
+const Koa = require('koa')
+const http = require('http')
+const https = require('https')
+const webpack = require('webpack')
+const Router = require('koa-router')
+const bodyParser = require('koa-bodyparser')
+const proxy = require('http-proxy-middleware')
+const conditional = require('koa-conditional-get')
+const WebpackDevServer = require('webpack-dev-server')
+const { default: enforceHttps } = require('koa-sslify')
+const devMiddleware = require('webpack-dev-middleware')
+const hotMiddleware = require('../webpack/script/koa-hot-middleware')
+const serverConfig = require('../webpack/webpack.server.beta.config')
+const staticServer = require('./server/middleware/filter-static')
+const redirect = require('./server/middleware/filter-redirect')
+const betaConfig = require('../webpack/webpack.beta.config')
+const pageSSR = require('./server/middleware/filter-ssr')
+const actionAPI = require('./server/action/index')
+const print = require('./server/util/print-log')
+const RUN_ENV = require('./server/util/run-env')
+const getTime = require('./server/util/util')
 
-const { argv } = process;
+const { argv } = process
 // 申明 Node 端口
-let serverPort = 443;
+let serverPort = 443
 // 环境判断
-let env = RUN_ENV.PRO;
+let env = RUN_ENV.PRO
 
 let httpServer = null
 
 if (argv.length === 3 && argv[2] === 'dev') {
-	serverPort = 8080;
-	env = RUN_ENV.DEV;
+	serverPort = 8080
+	env = RUN_ENV.DEV
 }
 
-const clientCompiler = webpack(betaConfig);
-const server = new WebpackDevServer(betaConfig.devServer, clientCompiler);
+const clientCompiler = webpack(betaConfig)
+const server = new WebpackDevServer(betaConfig.devServer, clientCompiler)
 server.startCallback(err => {
-	print.info(`${getTime()} 编译开始`);
+	print.info(`${getTime()} 编译开始`)
 	if (err) {
-		print.err(`${getTime()} 静态资源服务器启动异常：${err.message}`);
+		print.err(`${getTime()} 静态资源服务器启动异常：${err.message}`)
 	} else {
-		print.info(`${getTime()} 静态资源服务器启动成功`);
+		print.info(`${getTime()} 静态资源服务器启动成功`)
 	}
-});
+})
 
-const serverCompiler = webpack(serverConfig);
+const serverCompiler = webpack(serverConfig)
 
-const app = new Koa();
+const app = new Koa()
 
-const router = new Router();
+const router = new Router()
 // 强制 https
 if (serverPort === 443) {
-	app.use(enforceHttps({ redirectMethods: ['GET', 'HEAD', '', undefined] }));
+	app.use(enforceHttps({ redirectMethods: ['GET', 'HEAD', '', undefined] }))
 }
 // 启用协商缓存
-app.use(conditional());
+app.use(conditional())
 // 项目静态资源服务器
-app.use(staticServer.projectStatic);
+app.use(staticServer.projectStatic)
 // 公共资源服务器
-app.use(staticServer.commonStatic);
+app.use(staticServer.commonStatic)
 if (env === RUN_ENV.BETA) {
 	// 将所有请求代理到 Webpack 开发服务器
 	app.use(
@@ -67,56 +67,56 @@ if (env === RUN_ENV.BETA) {
 			target: 'http://localhost:3000',
 			pathRewrite: { '^/clientpublic': '' },
 		}),
-	);
+	)
 	// 使用 webpack-dev-middleware 中间件
 	app.use(
 		devMiddleware.koaWrapper(serverCompiler, {
 			publicPath: serverConfig.output.publicPath,
 			stats: 'errors-only', // 设置 stats 选项
 			// writeToDisk: true, // 将文件写入磁盘
-			serverSideRender: true // 指示模块启用服务器端渲染模式
+			serverSideRender: true, // 指示模块启用服务器端渲染模式
 		}),
-	);
+	)
 
 	// 使用 webpack-hot-middleware 中间件
-	app.use(hotMiddleware(serverCompiler));
+	app.use(hotMiddleware(serverCompiler))
 
 	// 监听 server 文件变化并自动重启服务器
 	serverCompiler.watch({}, err => {
 		if (err) {
-			print.err(`${getTime()} server 文件编译出错：${err.message}`);
+			print.err(`${getTime()} server 文件编译出错：${err.message}`)
 		} else {
-			print.info(`${getTime()} server 文件编译出错：${err.message}`);
+			print.info(`${getTime()} server 文件编译出错：${err.message}`)
 		}
-	});
+	})
 }
 // 处理post参数
-app.use(bodyParser());
+app.use(bodyParser())
 // 合并请求参数
 app.use(async (ctx, next) => {
-	Object.assign(ctx.query, ctx.request.body);
-	await next();
-});
+	Object.assign(ctx.query, ctx.request.body)
+	await next()
+})
 // 服务端渲染 ssr
-app.use(pageSSR);
+app.use(pageSSR)
 // 文章内容解析服务
-app.use(actionAPI);
+app.use(actionAPI)
 // 启动路由
-app.use(router.routes());
+app.use(router.routes())
 // 重定向路由
-app.use(redirect);
+app.use(redirect)
 if (env === RUN_ENV.BETA) {
-// 当 webpack 编译器发生变化时，重新启动服务器
-serverCompiler.plugin('compilation', (compilation) => {
-	compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
-		httpServer.close(() => {
-		httpServer.listen(serverPort, () => {
-		  console.log('Server restarted');
-		  cb();
-		});
-	  });
-	});
-  });
+	// 当 webpack 编译器发生变化时，重新启动服务器
+	serverCompiler.plugin('compilation', compilation => {
+		compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
+			httpServer.close(() => {
+				httpServer.listen(serverPort, () => {
+					console.log('Server restarted')
+					cb()
+				})
+			})
+		})
+	})
 }
 // 启动监听端口
 if (serverPort === 443) {
@@ -124,9 +124,9 @@ if (serverPort === 443) {
 	const options = {
 		key: fs.readFileSync('./server/config/ssl/www.qqweb.top.key'),
 		cert: fs.readFileSync('./server/config/ssl/www.qqweb.top.pem'),
-	};
-	https.createServer(options, app.callback()).listen(serverPort);
-	httpServer = http.createServer(app.callback()).listen(80);
+	}
+	https.createServer(options, app.callback()).listen(serverPort)
+	httpServer = http.createServer(app.callback()).listen(80)
 } else {
-	httpServer = http.createServer(app.callback()).listen(serverPort);
+	httpServer = http.createServer(app.callback()).listen(serverPort)
 }
