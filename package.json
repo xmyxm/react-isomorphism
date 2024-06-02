@@ -11,7 +11,7 @@
 		"static": "webpack-dev-server --config ./webpack/webpack.beta.config.js --mode development",
 		"update": "node ./server/util/seolink.js",
 		"lint": "eslint src --fix --ext .ts --ext .tsx",
-		"write": "prettier --write \"./webpack/**\" \"./src/server/**\"",
+		"write": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\" \"./webpack/**\"",
 		"prepare": "husky install"
 	},
 	"husky": {
