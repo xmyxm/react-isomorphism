@@ -104,6 +104,7 @@
 		"koa": "^2.13.4",
 		"koa-bodyparser": "^4.3.0",
 		"koa-conditional-get": "^3.0.0",
+		"koa-connect": "^2.1.0",
 		"koa-router": "^10.1.1",
 		"koa-sslify": "^5.0.0",
 		"koa-static": "^5.0.0",
