@@ -1,4 +1,4 @@
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const config = require('./webpack.base.config.js')
 config.mode = 'development'
 config.devtool = 'eval-cheap-module-source-map'
@@ -11,10 +11,8 @@ config.module.rules.push(
 			{
 				loader: 'babel-loader',
 				options: {
-					plugins: [
-						require.resolve('react-refresh/babel')
-					],
-				}
+					plugins: [require.resolve('react-refresh/babel')],
+				},
 			},
 			{
 				loader: 'ts-loader',
@@ -75,7 +73,7 @@ config.plugins.push(
 	// new webpack.HotModuleReplacementPlugin(), "hot: true" 时 webpack 已经自动引入了
 	// @pmmmwh/react-refresh-webpack-plugin 是一个用于 Webpack 的插件，它结合 React 官方的 Fast Refresh（快速刷新）功能，提供了一种在开发过程中无需完全刷新页面就能更新 React 组件的能力。这个功能通常被称为热替换（Hot Module Replacement，HMR），但它专门为 React 组件定制，以保持组件状态并提供更好的开发体验。
 	// Fast Refresh 是 React Native 引入的一个特性，后来被移植到了 React。与传统的 HMR 相比，Fast Refresh 能够更智能地处理 React 函数组件的更新，避免不必要的重新挂载，从而保留组件状态和 React hooks 的状态。
-	new ReactRefreshWebpackPlugin()
+	new ReactRefreshWebpackPlugin(),
 )
 
 module.exports = config

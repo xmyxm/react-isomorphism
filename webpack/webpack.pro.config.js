@@ -55,7 +55,7 @@ config.plugins.push(
 		filename: 'css/[name].[contenthash].css',
 	}),
 	// 体积分析插件
-	new BundleAnalyzerPlugin()
+	new BundleAnalyzerPlugin(),
 )
 
 module.exports = config

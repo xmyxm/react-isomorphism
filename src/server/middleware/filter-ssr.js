@@ -1,5 +1,6 @@
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
+const NodeModule = require('module')
 const vm = require('vm')
 const nodeFs = require('fs')
 const path = require('path')
@@ -8,26 +9,28 @@ const { Helmet } = require('react-helmet')
 const print = require('../util/print-log')
 
 // 页面优先走ssl逻辑
-function pageSSR(webpackFs) {
+function pageSSR(serverFs) {
 	function middleware(ctx, next) {
 		const urlPath = ctx.path
 		try {
 			const jsFilePath = path.resolve(__dirname, `../../../dist/server${urlPath}.js`)
-			const fs = webpackFs || nodeFs
+			const fs = serverFs || nodeFs
 			if (fs.existsSync(jsFilePath)) {
 				const code = fs.readFileSync(jsFilePath, 'utf8')
+
+				const wrapper = NodeModule.wrap(code)
 				// 创建一个新的脚本
-				const script = new vm.Script(code)
+				const script = new vm.Script(wrapper)
 
 				// 创建一个沙箱环境
-				const sandbox = {}
+				const sandbox = { module: {}, console, require, process, global }
 				vm.createContext(sandbox)
 
 				// 在沙箱中执行脚本
-				script.runInContext(sandbox)
-
+				const compiledWrapper = script.runInNewContext(sandbox)
+				console.log(compiledWrapper)
 				// 现在沙箱对象包含了文件中定义的方法，假设方法名为 myFunction
-				const contentHtml = sandbox.default()
+				// const contentHtml = sandbox.default()
 
 				const htmlFilePath = path.resolve(__dirname, `../../../dist/client${urlPath}.html`)
 				if (fs.existsSync(htmlFilePath)) {
@@ -40,7 +43,7 @@ function pageSSR(webpackFs) {
 				`
 					const pageHtml = mustache.render(template, {
 						reactSSRHead: headHtml,
-						reactSSRBody: contentHtml,
+						reactSSRBody: '', // contentHtml,
 					})
 					ctx.body = pageHtml
 				} else {

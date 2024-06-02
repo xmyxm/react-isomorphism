@@ -11,7 +11,7 @@ const WebpackDevServer = require('webpack-dev-server')
 const { default: enforceHttps } = require('koa-sslify')
 const devMiddleware = require('webpack-dev-middleware')
 const { createProxyMiddleware } = require('http-proxy-middleware')
-const webpackHotMiddleware = require('webpack-hot-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware')
 const serverConfig = require('../webpack/webpack.server.beta.config')
 const staticServer = require('./server/middleware/filter-static')
 const redirect = require('./server/middleware/filter-redirect')
@@ -34,19 +34,6 @@ if (argv.length === 3 && argv[2] === 'dev') {
 	serverPort = 8080
 	env = RUN_ENV.DEV
 }
-
-const clientCompiler = webpack(betaConfig)
-const server = new WebpackDevServer(betaConfig.devServer, clientCompiler)
-server.startCallback(err => {
-	print.info(`${getTime()} client 编译开始`)
-	if (err) {
-		print.error(`${getTime()} client 静态资源服务器启动异常：${err.message}`)
-	} else {
-		print.info(`${getTime()} client 静态资源服务器启动成功`)
-	}
-})
-
-const serverCompiler = webpack(serverConfig)
 
 const app = new Koa()
 
@@ -76,6 +63,19 @@ app.use(router.routes())
 app.use(redirect)
 
 if (env === RUN_ENV.DEV) {
+	const clientCompiler = webpack(betaConfig)
+	const devServer = new WebpackDevServer(betaConfig.devServer, clientCompiler)
+	devServer.startCallback(err => {
+		print.info(`${getTime()} client 编译开始`)
+		if (err) {
+			print.error(`${getTime()} client 静态资源服务器启动异常：${err.message}`)
+		} else {
+			print.info(`${getTime()} client 静态资源服务器启动成功`)
+		}
+	})
+
+	const serverCompiler = webpack(serverConfig)
+
 	serverCompiler.hooks.done.tap('afterCompile', stats => {
 		print.info(`${getTime()} server 文件编译完成，耗时: ${stats.endTime - stats.startTime}ms`)
 		httpServer.close(() => {
@@ -87,7 +87,7 @@ if (env === RUN_ENV.DEV) {
 
 	const proxy = createProxyMiddleware({
 		target: 'http://localhost:3000',
-		changeOrigin : true ,
+		changeOrigin: true,
 		pathFilter: '/clientpublic',
 		pathRewrite: { '^/clientpublic': '' },
 	})
@@ -105,10 +105,12 @@ if (env === RUN_ENV.DEV) {
 
 	// 使用 webpack-hot-middleware 中间件
 	app.use(c2k(webpackHotMiddleware(serverCompiler)))
+	// 服务端渲染 ssr
+	app.use(pageSSR(serverCompiler.outputFileSystem))
+} else {
+	// 服务端渲染 ssr
+	app.use(pageSSR())
 }
-
-// 服务端渲染 ssr
-app.use(pageSSR(env === RUN_ENV.DEV ? serverCompiler.outputFileSystem : undefined))
 
 // 启动监听端口
 if (serverPort === 443) {
