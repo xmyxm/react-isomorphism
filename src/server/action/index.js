@@ -19,6 +19,7 @@ function action(ctx, next) {
 			reloadApp(ctx, next)
 			break
 		default:
+			next()
 			break
 	}
 }
