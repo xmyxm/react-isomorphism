@@ -1,14 +1,13 @@
 import React from 'react'
-import Header from '../component/header'
-import Footer from '../component/footer'
+import Head from '../component/head'
+import Foot from '../component/foot'
 import '../style/index.less'
 
 export function Index() {
-	console.log('========1========')
 	return (
 		<React.Fragment>
-			<Header title="同构模板首页" />
-			<Footer />
+			<Head title="同构模板首页" />
+			<Foot />
 		</React.Fragment>
 	)
 }

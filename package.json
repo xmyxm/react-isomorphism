@@ -51,12 +51,12 @@
 		"@babel/runtime": "^7.14.0",
 		"@commitlint/cli": "^16.2.1",
 		"@commitlint/config-conventional": "^16.2.1",
+		"@types/react-helmet": "^6.1.11",
 		"@typescript-eslint/eslint-plugin": "^5.12.1",
 		"@typescript-eslint/parser": "^5.12.1",
 		"autoprefixer": "^10.2.5",
 		"babel-loader": "^9.1.3",
 		"browserslist": "^4.16.6",
-		"cheerio": "^1.0.0-rc.10",
 		"clean-webpack-plugin": "^4.0.0-alpha.0",
 		"core-js": "^3.11.1",
 		"css-loader": "^7.1.1",
@@ -71,7 +71,7 @@
 		"eslint-plugin-react": "^7.28.0",
 		"file-loader": "^6.2.0",
 		"html-loader": "^5.0.0",
-		"html-webpack-plugin": "^5.5.0",
+		"html-webpack-plugin": "^5.6.0",
 		"husky": "^7.0.4",
 		"ignore-loader": "^0.1.2",
 		"less": "^4.2.0",
@@ -110,6 +110,7 @@
 		"prop-types": "^15.7.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"react-helmet": "^6.1.0",
 		"spark-md5": "^3.0.2"
 	}
 }

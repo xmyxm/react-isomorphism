@@ -1,7 +1,7 @@
-const getNote = require('./api/getNote')
-const login = require('./api/login')
-const logout = require('./api/logout')
-const reloadApp = require('./api/reloadapp')
+const getNote = require('./getNote')
+const login = require('./login')
+const logout = require('./logout')
+const reloadApp = require('./reloadapp')
 
 function action(ctx, next) {
 	const { path } = ctx

@@ -1,4 +1,4 @@
-const userList = require('../../config/user')
+const userList = require('../config/user')
 
 // 文章读取服务
 function logout(ctx) {

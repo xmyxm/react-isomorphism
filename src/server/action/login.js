@@ -1,5 +1,5 @@
 const SparkMD5 = require('spark-md5')
-const userList = require('../../config/user')
+const userList = require('../config/user')
 
 // 文章读取服务
 function login(ctx) {

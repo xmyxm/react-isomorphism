@@ -1,8 +1,8 @@
 const fs = require('fs')
 const LZString = require('lz-string')
-const userList = require('../../config/user')
-const getTime = require('../../util/util')
-const print = require('../../util/print-log')
+const userList = require('../config/user')
+const getTime = require('../util/util')
+const print = require('../util/print-log')
 
 const cacheData = {}
 

@@ -1,7 +1,7 @@
 // 自动打包重启
 const { execSync } = require('child_process')
-const getTime = require('../../util/util')
-const print = require('../../util/print-log')
+const getTime = require('../util/util')
+const print = require('../util/print-log')
 
 // 自动编译重启
 function reloadApp(ctx) {

@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, ReactElement } from 'react'
+import Helmet from 'react-helmet'
 import { getDateNowText } from '../../util/util'
 import './index.less'
 
@@ -6,7 +7,7 @@ export interface Props {
 	title?: string
 }
 
-export default function Header(props: Props): Element {
+export default function Head(props: Props): ReactElement {
 	const { title = '书签' } = props
 	const [dateText, setDateText] = useState(getDateNowText())
 
@@ -22,6 +23,10 @@ export default function Header(props: Props): Element {
 
 	return (
 		<React.Fragment>
+			<Helmet>
+				<title>欢迎！</title>
+				<meta name="keywords" content="同构SEO" />
+			</Helmet>
 			<header className="header">
 				<div onClick={goHome} className="title">
 					<i className="logo-icon"></i>

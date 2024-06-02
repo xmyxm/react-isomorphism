@@ -1,13 +1,13 @@
 import React from 'react'
-import Header from '../component/header'
-import Footer from '../component/footer'
+import Head from '../component/head'
+import Foot from '../component/foot'
 import '../style/note.less'
 
 export function Note() {
 	return (
 		<React.Fragment>
-			<Header title="同构详情首页"></Header>
-			<Footer />
+			<Head title="同构模板Note" />
+			<Foot />
 		</React.Fragment>
 	)
 }
