@@ -2,6 +2,7 @@
 /* eslint-disable import/no-dynamic-require */
 const fs = require('fs')
 const path = require('path')
+const mustache = require('mustache')
 const { Helmet } = require('react-helmet')
 const print = require('../util/print-log')
 
@@ -21,7 +22,10 @@ async function pageSSR(ctx, next) {
 					${head.link.toString()}\n
 					${head.title.toString()}\n
 				`
-				const pageHtml = template.replace('react-ssr-head', headHtml).replace('react-ssr-body', contentHtml)
+				const pageHtml = mustache.render(template, {
+					reactSSRHead: headHtml,
+					reactSSRBody: contentHtml,
+				})
 				ctx.body = pageHtml
 			} else {
 				const msg = `路径：${ctx.path} 页面html不存在`

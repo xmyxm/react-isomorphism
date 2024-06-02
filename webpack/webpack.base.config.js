@@ -36,22 +36,6 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.(es6|jsx|js|ts|tsx)$/,
-				exclude: /node_modules/,
-				use: [
-					'babel-loader',
-					{
-						loader: 'ts-loader',
-						options: {
-							// 关闭类型检查，即只进行转译
-							// 类型检查交给 fork-ts-checker-webpack-plugin 在别的的线程中做
-							transpileOnly: true,
-							happyPackMode: true,
-						},
-					},
-				],
-			},
-			{
 				// html模板加载器，可以处理引用的静态资源，默认配置参数attrs=img:src，处理图片的src引用的资源
 				test: /\.html$/,
 				loader: 'html-loader',

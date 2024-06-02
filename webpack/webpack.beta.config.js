@@ -1,9 +1,33 @@
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const config = require('./webpack.base.config.js')
-
+const webpack = require('webpack')
 config.mode = 'development'
 config.devtool = 'eval-cheap-module-source-map'
+
 config.module.rules.push(
+	{
+		test: /\.(es6|jsx|js|ts|tsx)$/,
+		exclude: /node_modules/,
+		use: [
+			{
+				loader: 'babel-loader',
+				options: {
+					plugins: [
+						require.resolve('react-refresh/babel')
+					],
+				}
+			},
+			{
+				loader: 'ts-loader',
+				options: {
+					// 关闭类型检查，即只进行转译
+					// 类型检查交给 fork-ts-checker-webpack-plugin 在别的的线程中做
+					transpileOnly: true,
+					happyPackMode: true,
+				},
+			},
+		],
+	},
 	{
 		test: /\.(less|css)$/,
 		use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
@@ -48,11 +72,11 @@ config.devServer = {
 	historyApiFallback: true, // 如果在服务器上找不到请求的资源,那么服务器将返回指定的 index.html 页面,从而允许应用程序使用基于 HTML5 History API 的路由。这种情况通常发生在使用了 HTML5 History API 的单页应用程序中
 }
 
-// 体积分析插件
-// config.plugins.push(
-// 	new BundleAnalyzerPlugin({
-// 		openAnalyzer: false, // 是否自动打开报告页面，默认为 true
-// 	}),
-// )
+config.plugins.push(
+	new webpack.HotModuleReplacementPlugin(),
+	// @pmmmwh/react-refresh-webpack-plugin 是一个用于 Webpack 的插件，它结合 React 官方的 Fast Refresh（快速刷新）功能，提供了一种在开发过程中无需完全刷新页面就能更新 React 组件的能力。这个功能通常被称为热替换（Hot Module Replacement，HMR），但它专门为 React 组件定制，以保持组件状态并提供更好的开发体验。
+	// Fast Refresh 是 React Native 引入的一个特性，后来被移植到了 React。与传统的 HMR 相比，Fast Refresh 能够更智能地处理 React 函数组件的更新，避免不必要的重新挂载，从而保留组件状态和 React hooks 的状态。
+	new ReactRefreshWebpackPlugin()
+)
 
 module.exports = config

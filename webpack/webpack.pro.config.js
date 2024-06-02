@@ -1,11 +1,27 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin') //webpack插件，用于清除目录文件
 const config = require('./webpack.base.config.js')
 
 config.mode = 'production'
 config.devtool = 'nosources-source-map'
 config.module.rules.push(
+	{
+		test: /\.(es6|jsx|js|ts|tsx)$/,
+		exclude: /node_modules/,
+		use: [
+			'babel-loader',
+			{
+				loader: 'ts-loader',
+				options: {
+					// 关闭类型检查，即只进行转译
+					// 类型检查交给 fork-ts-checker-webpack-plugin 在别的的线程中做
+					transpileOnly: true,
+					happyPackMode: true,
+				},
+			},
+		],
+	},
 	{
 		test: /\.(less|css)$/,
 		use: [
@@ -38,9 +54,8 @@ config.plugins.push(
 	new MiniCssExtractPlugin({
 		filename: 'css/[name].[contenthash].css',
 	}),
+	// 体积分析插件
+	new BundleAnalyzerPlugin()
 )
-
-// 体积分析插件
-// config.plugins.push(new BundleAnalyzerPlugin())
 
 module.exports = config
