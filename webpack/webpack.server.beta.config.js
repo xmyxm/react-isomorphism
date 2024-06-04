@@ -6,8 +6,8 @@ const BuildDonePlugin = require('./plugins/builddone')
 
 module.exports = {
 	entry: {
-		index: ['webpack-hot-middleware/client', './src/server/page/index.tsx'],
-		note: ['webpack-hot-middleware/client', './src/server/page/note.tsx'],
+		index: ['./src/server/page/index.tsx'],
+		note: ['./src/server/page/note.tsx'],
 	},
 	output: {
 		clean: true,
@@ -34,6 +34,7 @@ module.exports = {
 							// 类型检查交给 fork-ts-checker-webpack-plugin 在别的的线程中做
 							transpileOnly: true,
 							happyPackMode: true,
+							configFile: './tsconfig/tsconfig.server.json', // 使用客户端的 tsconfig
 						},
 					},
 				],

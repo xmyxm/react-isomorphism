@@ -21,6 +21,7 @@ config.module.rules.push(
 					// 类型检查交给 fork-ts-checker-webpack-plugin 在别的的线程中做
 					transpileOnly: true,
 					happyPackMode: true,
+					configFile: './tsconfig/tsconfig.client.json', // 使用客户端的 tsconfig
 				},
 			},
 		],

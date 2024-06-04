@@ -1,0 +1,9 @@
+{
+	"extends": "./tsconfig.json", // 继承共享的基础配置
+	"compilerOptions": {
+		"module": "esnext", // 浏览器端打包工具通常处理 ES6+ 模块
+		"target": "es5", // 针对旧版浏览器的兼容性
+		"outDir": "../../dist/client" // 指定输出目录
+	},
+	"include": ["src/client/**/*"] // 指定客户端代码的位置
+}
