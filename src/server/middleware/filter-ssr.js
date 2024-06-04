@@ -2,21 +2,21 @@
 /* eslint-disable import/no-dynamic-require */
 // const NodeModule = require('module')
 const vm = require('vm')
-const nodeFs = require('fs')
+const fs = require('fs')
 const path = require('path')
 const mustache = require('mustache')
 const { Helmet } = require('react-helmet')
 const print = require('../util/print-log')
 
 // 页面优先走ssl逻辑
-function pageSSR(serverFs) {
+function pageSSR(fsMap = {}) {
+	const { serverFS = fs, clientFS = fs } = fsMap
 	function middleware(ctx, next) {
 		const urlPath = ctx.path
 		try {
 			const jsFilePath = path.resolve(__dirname, `../../../dist/server${urlPath}.js`)
-			const fs = serverFs || nodeFs
-			if (fs.existsSync(jsFilePath)) {
-				const code = fs.readFileSync(jsFilePath, 'utf8')
+			if (serverFS.existsSync(jsFilePath)) {
+				const code = serverFS.readFileSync(jsFilePath, 'utf8')
 
 				const tempTestFilePath = path.resolve(__dirname, `../../../dist/server${urlPath}_test.js`)
 				require('fs').writeFileSync(tempTestFilePath, code, 'utf8')
@@ -65,8 +65,8 @@ function pageSSR(serverFs) {
 				// const contentHtml = sandbox.default()
 
 				const htmlFilePath = path.resolve(__dirname, `../../../dist/client${urlPath}.html`)
-				if (fs.existsSync(htmlFilePath)) {
-					const template = fs.readFileSync(htmlFilePath, 'utf-8')
+				if (clientFS.existsSync(htmlFilePath)) {
+					const template = clientFS.readFileSync(htmlFilePath, 'utf-8')
 					const head = Helmet.renderStatic()
 					const headHtml = `
 					${head.meta.toString()}\n

@@ -106,7 +106,10 @@ if (env === RUN_ENV.DEV) {
 	// 使用 webpack-hot-middleware 中间件
 	app.use(c2k(webpackHotMiddleware(serverCompiler)))
 	// 服务端渲染 ssr
-	app.use(pageSSR(serverCompiler.outputFileSystem))
+	app.use(pageSSR({
+		serverFS: serverCompiler.outputFileSystem,
+		clientFS: clientCompiler.outputFileSystem,
+	}))
 } else {
 	// 服务端渲染 ssr
 	app.use(pageSSR())
