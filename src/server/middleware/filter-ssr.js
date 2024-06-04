@@ -16,10 +16,10 @@ function pageSSR(serverFs) {
 			const jsFilePath = path.resolve(__dirname, `../../../dist/server${urlPath}.js`)
 			const fs = serverFs || nodeFs
 			if (fs.existsSync(jsFilePath)) {
-				const tempTestFilePath = path.resolve(__dirname, `../../../dist/server${urlPath}_test.js`)
-				const code = fs.readFileSync(tempTestFilePath, 'utf8')
+				const code = fs.readFileSync(jsFilePath, 'utf8')
 
-				require('fs').writeFileSync('output.js', code, 'utf8')
+				const tempTestFilePath = path.resolve(__dirname, `../../../dist/server${urlPath}_test.js`)
+				require('fs').writeFileSync(tempTestFilePath, code, 'utf8')
 				// const wrapper = NodeModule.wrap(code)
 				// // 创建一个新的脚本
 				// const script = new vm.Script(wrapper, {
@@ -46,7 +46,7 @@ function pageSSR(serverFs) {
 				// 创建沙盒上下文
 				vm.createContext(sandbox)
 				// 创建一个 Script 实例并运行它
-				const script = new vm.Script(code, { filename: 'script.js' })
+				const script = new vm.Script(code, { filename: `server_ssr_${urlPath}.js` })
 				script.runInContext(sandbox)
 
 				// 现在你可以访问沙盒环境中的 module.exports
