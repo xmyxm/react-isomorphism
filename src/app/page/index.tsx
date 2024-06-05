@@ -5,11 +5,11 @@ import '../style/index.less'
 
 export function Index() {
 	return (
-		<React.Fragment>
+		<div>
 			<Head title="同构模板首页" />
 			<Foot />
-		</React.Fragment>
+		</div>
 	)
 }
 
-export default { Index }
+export default Index

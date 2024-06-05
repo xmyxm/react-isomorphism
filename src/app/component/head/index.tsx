@@ -22,7 +22,7 @@ export default function Head(props: Props): ReactElement {
 	}, [])
 
 	return (
-		<React.Fragment>
+		<div>
 			<Helmet>
 				<title>欢迎！</title>
 				<meta name="keywords" content="同构SEO" />
@@ -35,6 +35,6 @@ export default function Head(props: Props): ReactElement {
 				<div className="time">{dateText}</div>
 			</header>
 			<div className="headerbox"></div>
-		</React.Fragment>
+		</div>
 	)
 }

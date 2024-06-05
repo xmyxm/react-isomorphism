@@ -4,7 +4,9 @@
 const vm = require('vm')
 const fs = require('fs')
 const path = require('path')
+const React = require('react')
 const mustache = require('mustache')
+const { renderToString } = require('react-dom/server')
 const { Helmet } = require('react-helmet')
 const print = require('../util/print-log')
 
@@ -35,24 +37,25 @@ function pageSSR(fsMap = {}) {
 
 				// 准备沙盒环境中的 module 和 exports 对象
 				const sandboxModule = { exports: {} }
+
 				const sandbox = {
 					module: sandboxModule,
 					exports: sandboxModule.exports,
 					require, // 你可以提供一个自定义的 require 函数，或直接使用 Node.js 的 require
 					console, // 如果脚本中有 console.log 或其他 console 方法
+					React, // 提供 React
 					// ...其他你想要在沙盒中提供的全局变量或模块
 				}
 
 				// 创建沙盒上下文
 				vm.createContext(sandbox)
 				// 创建一个 Script 实例并运行它
-				const script = new vm.Script(code, { filename: `server_ssr_${urlPath}.js` })
-				script.runInContext(sandbox)
+				/// const script = new vm.Script(code, { filename: `server_ssr_${urlPath}.js` })
+				vm.runInContext(code, sandbox)
 
-				// 现在你可以访问沙盒环境中的 module.exports
-				const exportedValues = sandbox.module.exports
-
-				console.log(exportedValues)
+				const pageComponent = sandbox.exports.default()
+				const contentHtml = renderToString(pageComponent)
+				console.log(contentHtml)
 
 				// 创建一个沙箱环境
 				// const sandbox = { module: {}, console, require, process, global }

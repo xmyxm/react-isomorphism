@@ -5,11 +5,11 @@ import '../style/note.less'
 
 export function Note() {
 	return (
-		<React.Fragment>
+		<div>
 			<Head title="同构模板Note" />
 			<Foot />
-		</React.Fragment>
+		</div>
 	)
 }
 
-export default { Note }
+export default Note
