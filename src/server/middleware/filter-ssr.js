@@ -59,7 +59,7 @@ function pageSSR(fsMap = {}) {
 				// const pageComponent = sandbox.exports.default()
 				const pageComponent = sandbox.module.exports.default()
 				const contentHtml = renderToString(pageComponent)
-				console.log(contentHtml)
+				// console.log(contentHtml)
 				// 创建一个沙箱环境
 				// const sandbox = { module: {}, console, require, process, global }
 				// vm.createContext(sandbox)
