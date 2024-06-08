@@ -27,12 +27,13 @@ module.exports = {
 				exclude: /node_modules/,
 				use: [
 					'babel-loader',
+					'babel-loader',
 					{
 						loader: 'ts-loader',
 						options: {
 							// 关闭类型检查，即只进行转译
-							// 类型检查交给 fork-ts-checker-webpack-plugin 在别的的线程中做
 							transpileOnly: true,
+							// 让 Webpack 使用多线程进行构建的插件
 							happyPackMode: true,
 							configFile: './tsconfig/tsconfig.server.json', // 使用客户端的 tsconfig
 						},
