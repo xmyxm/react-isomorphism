@@ -6,8 +6,8 @@ const BuildDonePlugin = require('./plugins/builddone')
 
 module.exports = {
 	entry: {
-		index: [ './src/app/page/index.tsx' ],
-		note: [ './src/app/page/note.tsx' ],
+		index: ['./src/app/page/index.tsx'],
+		note: ['./src/app/page/note.tsx'],
 	},
 	output: {
 		clean: true,
