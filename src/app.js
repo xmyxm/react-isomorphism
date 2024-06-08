@@ -88,8 +88,8 @@ if (env === RUN_ENV.DEV) {
 	const proxy = createProxyMiddleware({
 		target: 'http://localhost:3000',
 		changeOrigin: true,
-		pathFilter: '/clientpublic',
-		pathRewrite: { '^/clientpublic': '' },
+		pathFilter: '/assets/',
+		// pathRewrite: { '^/assets': '' },
 	})
 	// 将所有请求代理到 Webpack 开发服务器
 	app.use(c2k(proxy))

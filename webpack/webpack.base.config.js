@@ -12,6 +12,8 @@ module.exports = {
 	output: {
 		clean: true,
 		path: packageFilePath,
+		// 指定了输出资源的公共 URL 地址的前缀，它会影响到所有通过 Webpack 加载的资源（如 JS、CSS、图片和字体文件）
+		publicPath: '/assets/',
 		filename: 'js/[name].[contenthash].js',
 	},
 	cache: true,
@@ -50,6 +52,7 @@ module.exports = {
 					{
 						loader: 'url-loader',
 						options: {
+							name: 'font/[name].[ext]',
 							limit: 1000,
 						},
 					},
@@ -62,7 +65,7 @@ module.exports = {
 		// 别名设置,主要是为了配和webpack.ProvidePlugin设置全局插件;
 		alias: {
 			// 绝对路径;特别注意这里定义的路径和依赖的包名不能重名
-			'@component': path.resolve(__dirname, '../src/component'),
+			'@component': path.resolve(__dirname, '../src/app/component'),
 		},
 	},
 	plugins: [
