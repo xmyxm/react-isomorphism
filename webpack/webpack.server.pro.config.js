@@ -5,8 +5,8 @@ const packageFilePath = path.join(__dirname, '../dist/server')
 
 module.exports = {
 	entry: {
-		index: ['./src/server/page/index.tsx'],
-		note: ['./src/server/page/note.tsx'],
+		index: [ './src/app/page/index.tsx' ],
+		note: [ './src/app/page/note.tsx' ],
 	},
 	output: {
 		clean: true,

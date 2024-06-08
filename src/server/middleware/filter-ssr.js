@@ -22,6 +22,9 @@ function pageSSR(fsMap = {}) {
 
 				const tempTestFilePath = path.resolve(__dirname, `../../../dist/server${urlPath}_test.js`)
 				require('fs').writeFileSync(tempTestFilePath, code, 'utf8')
+				// const testfn = require(`../../../dist/server${urlPath}_test.js`)
+				// console.log('=====================', testfn.default())
+
 				// const wrapper = NodeModule.wrap(code)
 				// // 创建一个新的脚本
 				// const script = new vm.Script(wrapper, {
