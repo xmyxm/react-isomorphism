@@ -30,10 +30,11 @@ module.exports = {
 						loader: 'ts-loader',
 						options: {
 							// 关闭类型检查，即只进行转译
-							// 类型检查交给 fork-ts-checker-webpack-plugin 在别的的线程中做
 							transpileOnly: true,
+							// 类型检查交给 fork-ts-checker-webpack-plugin 在别的的线程中做
 							happyPackMode: true,
-							configFile: './tsconfig/tsconfig.server.json', // 使用客户端的 tsconfig
+							// 使用指定的 tsconfig
+							configFile: './tsconfig/tsconfig.server.json',
 						},
 					},
 				],

@@ -35,7 +35,8 @@ module.exports = {
 							transpileOnly: true,
 							// 让 Webpack 使用多线程进行构建的插件
 							happyPackMode: true,
-							configFile: './tsconfig/tsconfig.server.json', // 使用客户端的 tsconfig
+							// 使用指定的 tsconfig
+							configFile: './tsconfig/tsconfig.server.json',
 						},
 					},
 				],
