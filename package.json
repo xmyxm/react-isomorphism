@@ -4,15 +4,13 @@
 	"description": "webpack + babel + react + jest + eslint 脚手架",
 	"main": "index.js",
 	"scripts": {
+		"start": "node ./src/app.js",
 		"dev": "node ./src/app.js dev",
 		"beta": "webpack --config ./webpack/webpack.beta.config.js && webpack --config ./webpack/webpack.server.beta.config.js",
-		"start": "node ./src/app.js",
 		"build": "webpack --config ./webpack/webpack.pro.config.js && webpack --config ./webpack/webpack.server.pro.config.js",
-		"test-build": "webpack --config ./webpack/test.config.js",
-		"ts-server": "webpack --config ./webpack/webpack.server.pro.config.js",
 		"ts-build": "tsc -p ./webpack/tsconfig/tsconfig.client.json && tsc -p ./webpack/tsconfig/tsconfig.server.json",
-		"static": "webpack-dev-server --config ./webpack/webpack.beta.config.js --mode development",
-		"update": "node ./server/util/seolink.js",
+		"server-build-new": "webpack --config ./webpack/webpack.server.new.config.js",
+		"server-build-pro": "webpack --config ./webpack/webpack.server.pro.config.js",
 		"lint": "eslint src --fix --ext .ts --ext .tsx",
 		"write": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\" \"./webpack/**\"",
 		"prepare": "husky install"

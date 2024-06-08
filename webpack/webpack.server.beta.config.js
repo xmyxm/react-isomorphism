@@ -14,7 +14,7 @@ module.exports = {
 		path: packageFilePath,
 		filename: '[name].js',
 		libraryTarget: 'commonjs2',
-		publicPath: '/servepublic',
+		publicPath: '/',
 	},
 	mode: 'development',
 	cache: true,

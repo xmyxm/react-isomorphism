@@ -12,6 +12,7 @@ module.exports = {
 		clean: true,
 		path: packageFilePath,
 		filename: '[name].js',
+		publicPath: '/',
 		libraryTarget: 'commonjs2',
 	},
 	mode: 'development',

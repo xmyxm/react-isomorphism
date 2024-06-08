@@ -56,10 +56,16 @@ function pageSSR(fsMap = {}) {
 				/// const script = new vm.Script(code, { filename: `server_ssr_${urlPath}.js` })
 				vm.runInContext(code, sandbox)
 
-				const pageComponent = sandbox.exports.default()
-				const contentHtml = renderToString(pageComponent)
-				console.log(contentHtml)
-
+				let pageComponent = null
+				if (sandbox.exports.default) {
+					pageComponent = sandbox.exports.default()
+				} else if (sandbox.module.exports.default) {
+					pageComponent = sandbox.module.exports.default()
+				}
+				if (pageComponent) {
+					const contentHtml = renderToString(pageComponent)
+					console.log(contentHtml)
+				}
 				// 创建一个沙箱环境
 				// const sandbox = { module: {}, console, require, process, global }
 				// vm.createContext(sandbox)
