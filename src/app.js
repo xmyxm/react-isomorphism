@@ -88,9 +88,9 @@ if (env === RUN_ENV.DEV) {
 	const proxy = createProxyMiddleware({
 		target: {
 			protocol: 'http:',
-			host: '127.0.0.1:3000',
+			port: 3000,
+			hostname: `localhost`,
 		},
-		// target: 'http://127.0.0.1:3000',
 		changeOrigin: true,
 		pathFilter: '/assets/',
 		// pathRewrite: { '^/assets': '' },
