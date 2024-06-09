@@ -10,6 +10,7 @@ const conditional = require('koa-conditional-get')
 const WebpackDevServer = require('webpack-dev-server')
 const { default: enforceHttps } = require('koa-sslify')
 const devMiddleware = require('webpack-dev-middleware')
+const proxy = require('koa-proxy');
 const { createProxyMiddleware } = require('http-proxy-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const serverConfig = require('../webpack/webpack.server.beta.config')
@@ -85,18 +86,23 @@ if (env === RUN_ENV.DEV) {
 		})
 	})
 
-	const proxy = createProxyMiddleware({
-		target: {
-			protocol: 'http:',
-			port: 3000,
-			hostname: `localhost`,
-		},
-		changeOrigin: true,
-		pathFilter: '/assets/',
-		// pathRewrite: { '^/assets': '' },
-	})
-	// 将所有请求代理到 Webpack 开发服务器
-	app.use(c2k(proxy))
+	// const proxy = createProxyMiddleware({
+	// 	target: {
+	// 		protocol: 'http:',
+	// 		port: 3000,
+	// 		host: '127.0.0.1:3000',
+	// 		hostname: `127.0.0.1`,
+	// 	},
+	// 	changeOrigin: true,
+	// 	pathFilter: '/assets/',
+	// 	// pathRewrite: { '^/assets': '' },
+	// })
+	// // 将所有请求代理到 Webpack 开发服务器
+	// app.use(c2k(proxy))
+	app.use(proxy({
+		host:  'http://127.0.0.1:3000', // proxy alicdn.com...
+  		match: /^\/assets\// 
+	}))
 	// 使用 webpack-dev-middleware 中间件
 	app.use(
 		devMiddleware.koaWrapper(serverCompiler, {
