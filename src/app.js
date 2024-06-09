@@ -92,7 +92,7 @@ if (env === RUN_ENV.DEV) {
 			hostname: `localhost`,
 		},
 		changeOrigin: true,
-		pathFilter: '/assets/',
+		pathFilter: '/assets',
 		// pathRewrite: { '^/assets': '' },
 	})
 	// 将所有请求代理到 Webpack 开发服务器

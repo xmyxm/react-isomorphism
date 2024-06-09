@@ -13,7 +13,7 @@ module.exports = {
 		clean: true,
 		path: packageFilePath,
 		// 指定了输出资源的公共 URL 地址的前缀，它会影响到所有通过 Webpack 加载的资源（如 JS、CSS、图片和字体文件）
-		publicPath: '/assets/',
+		publicPath: '/assets',
 		filename: 'js/[name].[contenthash].js',
 	},
 	cache: true,

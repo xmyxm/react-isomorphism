@@ -47,9 +47,12 @@ config.devServer = {
 	headers: {
 		'X-Custom-h': 'react', // 为所有响应添加 headers：
 	},
-	allowedHosts: 'all', //允许将允许访问开发服务器的服务列入白名单
+	allowedHosts: 'all', //允许将访问开发服务器的服务列入白名单
 	static: {
+		// 指向包含静态文件的目录
 		directory: config.output.path,
+		// 启用文件目录列表
+		serveIndex: true, 
 		publicPath: config.output.publicPath,
 	},
 	client: {
@@ -60,9 +63,7 @@ config.devServer = {
 			errors: true, // 当出现编译错误或警告时，在浏览器中显示
 			warnings: true,
 		},
-		webSocketTransport: 'ws', // 客户端单独选择当前的 devServer 传输模式 'ws' | 'sockjs'
 	},
-	webSocketServer: 'ws',
 	compress: true, // 启用gzip 压缩：
 	hot: true, // 启用 webpack 的 模块热替换 特性：
 	host: 'localhost', //指定使用一个 host。默认是 localhost。如果你希望服务器外部可访问，指定为ip
