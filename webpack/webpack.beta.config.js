@@ -52,7 +52,7 @@ config.devServer = {
 		// 指向包含静态文件的目录
 		directory: config.output.path,
 		// 启用文件目录列表
-		serveIndex: true, 
+		serveIndex: true,
 		publicPath: config.output.publicPath,
 	},
 	client: {

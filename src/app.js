@@ -10,7 +10,13 @@ const conditional = require('koa-conditional-get')
 const WebpackDevServer = require('webpack-dev-server')
 const { default: enforceHttps } = require('koa-sslify')
 const devMiddleware = require('webpack-dev-middleware')
-const { createProxyMiddleware } = require('http-proxy-middleware')
+const {
+	createProxyMiddleware,
+	debugProxyErrorsPlugin, // subscribe to proxy errors to prevent server from crashing
+	loggerPlugin, // log proxy events to a logger (ie. console)
+	errorResponsePlugin, // return 5xx response on proxy error
+	proxyEventsPlugin,
+} = require('http-proxy-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const serverConfig = require('../webpack/webpack.server.beta.config')
 const staticServer = require('./server/middleware/filter-static')
@@ -85,15 +91,24 @@ if (env === RUN_ENV.DEV) {
 		})
 	})
 
+	const requestURLLogger = (proxyServer, options) => {
+		proxyServer.on('proxyReq', (proxyReq, req, res) => {
+			// console.log(`[HPM] [${req.method}] [${proxyReq.protocol}] [${proxyReq.host}] [${proxyReq.path}] 代理URL: ${req.url}`) // outputs: [HPM] GET /users
+		})
+	}
 	const proxy = createProxyMiddleware({
 		target: {
 			protocol: 'http:',
 			port: 3000,
+			host: 'localhost:3000',
 			hostname: `localhost`,
 		},
 		changeOrigin: true,
 		pathFilter: '/assets',
 		// pathRewrite: { '^/assets': '' },
+		// 对预配置的插件不满意，您可以通过配置将其弹出ejectPlugins: true
+		ejectPlugins: true,
+		plugins: [debugProxyErrorsPlugin, loggerPlugin, errorResponsePlugin, proxyEventsPlugin, requestURLLogger],
 	})
 	// 将所有请求代理到 Webpack 开发服务器
 	app.use(c2k(proxy))
