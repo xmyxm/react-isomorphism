@@ -20,10 +20,12 @@ function initRouter() {
 					if (fs.existsSync(actionPath)) {
 						const action = require(actionPath)
 						if (action) {
-							router.register(key, methods, async (ctx, next) => {
-								await action(ctx)
-								await next()
-							})
+							// 命中执行了 API Action 后就无需再执行后续的 next 中间件
+							// router.register(key, methods, async (ctx, next) => {
+							// 	await action(ctx)
+							// 	await next()
+							// })
+							router.register(key, methods, action)
 						}
 					}
 				}
