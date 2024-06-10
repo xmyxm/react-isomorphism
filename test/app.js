@@ -7,13 +7,13 @@ const webpackConfig = require('../webpack/webpack.beta.config')
 const compiler = webpack(webpackConfig)
 
 // 监听 'done' 事件，它在每次编译完成后触发
-compiler.hooks.done.tap('done', (stats) => {
-	console.log('============================== 编译完成 1');
+compiler.hooks.done.tap('done', stats => {
+	console.log('============================== 编译完成 1')
 	readWebpackFile('done')
 })
 
- compiler.hooks.done.tap('afterCompile', stats => {
-	console.log('============================== 编译完成 2');
+compiler.hooks.done.tap('afterCompile', stats => {
+	console.log('============================== 编译完成 2')
 	readWebpackFile('afterCompile')
 })
 
