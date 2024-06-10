@@ -8,7 +8,7 @@ const maxage = 1000 * 10
 
 // 静态资源服务
 module.exports = {
-	projectStatic: serve(path.resolve(__dirname, '../../dist/client/'), {
+	projectStatic: serve(path.resolve(__dirname, '../../../dist/client/'), {
 		index: false, // 默认 index.html，不指定空即为 csr
 		gzip,
 		maxage,
@@ -16,7 +16,7 @@ module.exports = {
 			console.log(`写入请求头: ${res.path}`)
 		},
 	}),
-	commonStatic: serve(path.resolve(__dirname, '../../webfile/'), {
+	commonStatic: serve(path.resolve(__dirname, '../../../webfile/'), {
 		index: false,
 		gzip,
 		maxage,
