@@ -7,7 +7,7 @@
 		// "lib": [], // 编译过程中需要引入的库文件的列表, 一般不要配置此选项
 		"allowJs": false, // 允许编译 javascript 文件
 		"checkJs": false, // 报告 javascript 文件中的错误, 必须配合allowJs使用
-		"jsx": "react", // TypeScript具有三种JSX模式：preserve，react和react-native。 这些模式只在代码生成阶段起作用 - 类型检查并不受影响。 在preserve模式下生成代码中会保留JSX以供后续的转换操作使用（比如：Babel）。 另外，输出文件会带有.jsx扩展名。 react模式会生成React.createElement，在使用前不需要再进行转换操作了，输出文件的扩展名为.js。 react-native相当于preserve，它也保留了所有的JSX，但是输出文件的扩展名是.js。
+		"jsx": "react-jsx", // "react": 将 JSX 转换为 React.createElement 调用，适用于 React 16 及之前的版本。"react-jsx": 使用新的 JSX 转换，适用于 React 17 及之后的版本，不需要导入 React。"react-jsxdev": 在开发模式下使用新的 JSX 转换，它包含额外的调试信息。"preserve": 保留 JSX 语法，后续可以通过 Babel 等工具进行转换
 		"declaration": true, // 生成相应的 '.d.ts' 文件
 		"sourceMap": true, // 生成相应的 '.map' 文件
 		"removeComments": false, // 删除编译后的所有的注释

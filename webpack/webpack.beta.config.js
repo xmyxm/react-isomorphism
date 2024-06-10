@@ -1,7 +1,7 @@
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const config = require('./webpack.base.config.js')
 config.mode = 'development'
-config.devtool = 'eval-cheap-module-source-map'
+config.devtool = 'source-map'
 
 config.module.rules.push(
 	{
