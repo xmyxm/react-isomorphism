@@ -57,8 +57,6 @@ function readWebpackFile(name = '') {
 	// 访问webpack内存文件系统
 	const outputFileSystem = compiler.outputFileSystem
 
-	const baseServerPath = path.resolve(__dirname, `../dist/client`)
-
 	// 从根目录开始读取所有文件路径
 	const allPaths = readDirectory(outputFileSystem, '/')
 

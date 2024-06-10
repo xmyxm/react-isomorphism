@@ -8,7 +8,8 @@ const proxy = httpProxy.createProxyServer({})
 proxy.on('proxyReq', (proxyReq, req, res) => {
 	// 获取代理请求的完整 URL
 	const fullUrl = `${proxyReq.protocol}//${proxyReq.host}${proxyReq.path}`
-	console.log('Proxying request to:', fullUrl)
+	console.log('Proxying request to1:', req, res)
+	console.log('Proxying request to2:', fullUrl)
 })
 
 // 代理请求到目标服务器

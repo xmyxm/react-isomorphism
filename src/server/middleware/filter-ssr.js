@@ -11,15 +11,14 @@ const { Helmet } = require('react-helmet')
 const print = require('../util/print-log')
 
 // 页面优先走ssl逻辑
-function pageSSR(fsMap = {}) {
-	const { serverFS = fs, clientFS = fs } = fsMap
+function pageSSR(fsMap) {
 	function middleware(ctx, next) {
 		const urlPath = ctx.path
 		try {
 			const baseServerPath = path.resolve(__dirname, `../../../dist/server`)
 			const jsFilePath = `${baseServerPath}/${urlPath}.js`
-			if (serverFS.existsSync(jsFilePath)) {
-				const code = serverFS.readFileSync(jsFilePath, 'utf8')
+			if (fsMap.serverFS.existsSync(jsFilePath)) {
+				const code = fsMap.serverFS.readFileSync(jsFilePath, 'utf8')
 
 				// 检查文件夹路径是否存在
 				if (!fs.existsSync(baseServerPath)) {
@@ -79,8 +78,8 @@ function pageSSR(fsMap = {}) {
 				// const contentHtml = sandbox.default()
 
 				const htmlFilePath = path.resolve(__dirname, `../../../dist/client${urlPath}.html`)
-				if (clientFS.existsSync(htmlFilePath)) {
-					const template = clientFS.readFileSync(htmlFilePath, 'utf-8')
+				if (fsMap.clientFS.existsSync(htmlFilePath)) {
+					const template = fsMap.clientFS.readFileSync(htmlFilePath, 'utf-8')
 					const head = Helmet.renderStatic()
 					const headHtml = `
 					${head.meta.toString()}\n

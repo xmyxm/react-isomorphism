@@ -69,7 +69,20 @@ app.use(router.routes())
 app.use(redirect)
 
 if (env === RUN_ENV.DEV) {
+	const fsMap = {}
 	const clientCompiler = webpack(betaConfig)
+	// 监听 'compile' 事件，它在编译开始时触发
+	clientCompiler.hooks.compile.tap('compile', () => {
+		console.log(`${getTime()} client 开始编译`)
+	})
+	// 监听 'done' 事件，它在每次编译完成后触发
+	clientCompiler.hooks.done.tap('afterCompile', stats => {
+		fsMap.clientFS = clientCompiler.outputFileSystem
+		print.info(`${getTime()} client 文件编译完成，耗时: ${stats.endTime - stats.startTime}ms`)
+		if (!httpServer) {
+			httpServer = http.createServer(app.callback()).listen(serverPort)
+		}
+	})
 	const devServer = new WebpackDevServer(betaConfig.devServer, clientCompiler)
 	devServer.startCallback(err => {
 		print.info(`${getTime()} client 编译开始`)
@@ -81,14 +94,18 @@ if (env === RUN_ENV.DEV) {
 	})
 
 	const serverCompiler = webpack(serverConfig)
-
+	// 监听 'compile' 事件，它在编译开始时触发
+	serverCompiler.hooks.compile.tap('compile', () => {
+		console.log(`${getTime()} server 开始编译`)
+	})
 	serverCompiler.hooks.done.tap('afterCompile', stats => {
+		fsMap.serverFS = serverCompiler.outputFileSystem
 		print.info(`${getTime()} server 文件编译完成，耗时: ${stats.endTime - stats.startTime}ms`)
-		httpServer.close(() => {
-			httpServer.listen(serverPort, () => {
-				print.info(`${getTime()} server 监听重启成功！`)
-			})
-		})
+		// httpServer.close(() => {
+		// 	httpServer.listen(serverPort, () => {
+		// 		print.info(`${getTime()} server 监听重启成功！`)
+		// 	})
+		// })
 	})
 
 	const requestURLLogger = (proxyServer, options) => {
@@ -125,26 +142,18 @@ if (env === RUN_ENV.DEV) {
 	// 使用 webpack-hot-middleware 中间件
 	app.use(c2k(webpackHotMiddleware(serverCompiler)))
 	// 服务端渲染 ssr
-	app.use(
-		pageSSR({
-			serverFS: serverCompiler.outputFileSystem,
-			clientFS: clientCompiler.outputFileSystem,
-		}),
-	)
+	app.use(pageSSR(fsMap))
 } else {
 	// 服务端渲染 ssr
-	app.use(pageSSR())
-}
-
-// 启动监听端口
-if (serverPort === 443) {
-	// ssl 文件
-	const options = {
-		key: fs.readFileSync('./server/config/ssl/www.qqweb.top.key'),
-		cert: fs.readFileSync('./server/config/ssl/www.qqweb.top.pem'),
+	app.use(pageSSR({ serverFS: fs, clientFS: fs }))
+	// 启动监听端口
+	if (serverPort === 443) {
+		// ssl 文件
+		const options = {
+			key: fs.readFileSync('./server/config/ssl/www.qqweb.top.key'),
+			cert: fs.readFileSync('./server/config/ssl/www.qqweb.top.pem'),
+		}
+		https.createServer(options, app.callback()).listen(serverPort)
+		httpServer = http.createServer(app.callback()).listen(80)
 	}
-	https.createServer(options, app.callback()).listen(serverPort)
-	httpServer = http.createServer(app.callback()).listen(80)
-} else {
-	httpServer = http.createServer(app.callback()).listen(serverPort)
 }
