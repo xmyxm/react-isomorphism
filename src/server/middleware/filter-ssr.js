@@ -21,29 +21,13 @@ function pageSSR(fsMap) {
 				const code = fsMap.serverFS.readFileSync(jsFilePath, 'utf8')
 
 				// 检查文件夹路径是否存在
-				if (!fs.existsSync(baseServerPath)) {
-					// 如果文件夹路径不存在，使用 mkdirSync 创建文件夹
-					// recursive: true 参数确保创建所有必需的父文件夹
-					fs.mkdirSync(baseServerPath, { recursive: true })
-				}
-				const tempTestFilePath = `${baseServerPath}/${urlPath}_test.js`
-				require('fs').writeFileSync(tempTestFilePath, code, 'utf8')
-
-				// const testfn = require(`../../../dist/server${urlPath}_test.js`)
-				// console.log('=====================', testfn.default())
-
-				// const wrapper = NodeModule.wrap(code)
-				// // 创建一个新的脚本
-				// const script = new vm.Script(wrapper, {
-				// 	filename: `${urlPath}.js`,
-				// 	displayErrors: true,
-				// })
-				// const m = { exports: {} }
-				// const compiledWrapper = script.runInThisContext({ exports: {} })
-
-				// compiledWrapper.call(m.exports, m.exports, require, m)
-				// const res = Object.prototype.hasOwnProperty.call(m.exports, 'default') ? m.exports.default : m.exports
-				// console.log(res)
+				// if (!fs.existsSync(baseServerPath)) {
+				// 	// 如果文件夹路径不存在，使用 mkdirSync 创建文件夹
+				// 	// recursive: true 参数确保创建所有必需的父文件夹
+				// 	fs.mkdirSync(baseServerPath, { recursive: true })
+				// }
+				// const tempTestFilePath = `${baseServerPath}/${urlPath}_test.js`
+				// require('fs').writeFileSync(tempTestFilePath, code, 'utf8')
 
 				// 准备沙盒环境中的 module 和 exports 对象
 				const sandboxModule = { exports: {} }
