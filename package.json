@@ -12,7 +12,7 @@
 		"ts-build": "tsc -p ./webpack/tsconfig/tsconfig.client.json && tsc -p ./webpack/tsconfig/tsconfig.server.json",
 		"server-build-pro": "webpack --config ./webpack/webpack.server.pro.config.js",
 		"lint": "eslint src --fix --ext .ts --ext .tsx",
-		"write": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\" \"./webpack/**\"",
+		"write": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\" \"./webpack/**\" \"./test/**\"",
 		"prepare": "husky install"
 	},
 	"husky": {
