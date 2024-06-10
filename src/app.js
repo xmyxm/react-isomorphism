@@ -49,11 +49,11 @@ if (serverPort === 443) {
 	app.use(enforceHttps({ redirectMethods: ['GET', 'HEAD', '', undefined] }))
 }
 // 启用协商缓存
-app.use(conditional())
+// app.use(conditional())
 // 项目静态资源服务器
-app.use(staticServer.projectStatic)
-// 公共资源服务器
-app.use(staticServer.commonStatic)
+// app.use(staticServer.projectStatic)
+// // 公共资源服务器
+// app.use(staticServer.commonStatic)
 // 处理post参数
 app.use(bodyParser())
 // 合并请求参数
@@ -62,9 +62,9 @@ app.use(async (ctx, next) => {
 	await next()
 })
 // 文章内容解析服务
-app.use(actionAPI)
+// app.use(actionAPI)
 // 启动路由
-app.use(router.routes())
+// app.use(router.routes())
 // 重定向路由
 app.use(redirect)
 
@@ -141,7 +141,7 @@ if (env === RUN_ENV.DEV) {
 	)
 
 	// 使用 webpack-hot-middleware 中间件
-	app.use(c2k(webpackHotMiddleware(serverCompiler)))
+	// app.use(c2k(webpackHotMiddleware(serverCompiler)))
 	// 服务端渲染 ssr
 	app.use(pageSSR(fsMap))
 } else {
