@@ -20,7 +20,6 @@ const webpackHotMiddleware = require('webpack-hot-middleware')
 const serverConfig = require('../webpack/webpack.server.beta.config')
 const staticServer = require('./server/middleware/filter-static')
 const initRouter = require('./server/middleware/filter-router')
-const redirect = require('./server/middleware/filter-redirect')
 const betaConfig = require('../webpack/webpack.beta.config')
 const pageSSR = require('./server/middleware/filter-ssr')
 const actionAPI = require('./server/action/index')
@@ -67,8 +66,6 @@ app.use(router.routes())
 // 用于根据 router.routes() 中定义的路由自动设置响应头部 Allow。如果收到了一个没有定义处理函数的请求方法（例如，对于一个只定义了 GET 处理函数的路由，收到了一个 POST 请求），这个中间件会返回 405 Method Not Allowed 或 501 Not Implemented。
 // 此外，这个中间件也提供了对 OPTIONS 请求的响应，自动返回服务器所支持的方法。这对于 RESTful API 的开发尤其有用，因为客户端可以通过发送 OPTIONS 请求来了解服务器支持哪些 HTTP 方法
 app.use(router.allowedMethods())
-// 重定向路由
-// app.use(redirect)
 
 if (env === RUN_ENV.DEV) {
 	const fsMap = {}

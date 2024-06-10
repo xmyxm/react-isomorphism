@@ -20,7 +20,10 @@ function initRouter() {
 					if (fs.existsSync(actionPath)) {
 						const action = require(actionPath)
 						if (action) {
-							router.register(key, methods, action)
+							router.register(key, methods, async (ctx, next) => {
+								await action(ctx)
+								await next()
+							})
 						}
 					}
 				}
