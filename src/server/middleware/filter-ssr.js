@@ -16,12 +16,20 @@ function pageSSR(fsMap = {}) {
 	function middleware(ctx, next) {
 		const urlPath = ctx.path
 		try {
-			const jsFilePath = path.resolve(__dirname, `../../../dist/server${urlPath}.js`)
+			const baseServerPath = path.resolve(__dirname, `../../../dist/server`)
+			const jsFilePath = `${baseServerPath}/${urlPath}.js`
 			if (serverFS.existsSync(jsFilePath)) {
 				const code = serverFS.readFileSync(jsFilePath, 'utf8')
 
-				const tempTestFilePath = path.resolve(__dirname, `../../../dist/server${urlPath}_test.js`)
+				// 检查文件夹路径是否存在
+				if (!fs.existsSync(baseServerPath)) {
+					// 如果文件夹路径不存在，使用 mkdirSync 创建文件夹
+					// recursive: true 参数确保创建所有必需的父文件夹
+					fs.mkdirSync(baseServerPath, { recursive: true })
+				}
+				const tempTestFilePath = `${baseServerPath}/${urlPath}_test.js`
 				require('fs').writeFileSync(tempTestFilePath, code, 'utf8')
+
 				// const testfn = require(`../../../dist/server${urlPath}_test.js`)
 				// console.log('=====================', testfn.default())
 
