@@ -110,6 +110,7 @@ if (env === RUN_ENV.DEV) {
 
 	const requestURLLogger = (proxyServer, options) => {
 		proxyServer.on('proxyReq', (proxyReq, req, res) => {
+			// require('../test/proxy.js')({ path: proxyReq.path})
 			// console.log(`[HPM] [${req.method}] [${proxyReq.protocol}] [${proxyReq.host}] [${proxyReq.path}] 代理URL: ${req.url}`) // outputs: [HPM] GET /users
 		})
 	}
