@@ -2,7 +2,6 @@
 /* eslint-disable import/no-dynamic-require */
 // const NodeModule = require('module')
 const vm = require('vm')
-const fs = require('fs')
 const path = require('path')
 const React = require('react')
 const mustache = require('mustache')
