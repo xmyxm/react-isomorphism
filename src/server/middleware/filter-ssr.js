@@ -2,7 +2,7 @@
 /* eslint-disable import/no-dynamic-require */
 // const NodeModule = require('module')
 const vm = require('vm')
-const fs = require('fs')
+// const fs = require('fs')
 const path = require('path')
 const React = require('react')
 const mustache = require('mustache')
@@ -12,18 +12,27 @@ const print = require('../util/print-log')
 
 // 页面优先走ssl逻辑
 function pageSSR(fsMap = {}) {
-	const { serverFS = fs, clientFS = fs } = fsMap
+	const { serverFS, clientFS } = fsMap
 	function middleware(ctx, next) {
 		const urlPath = ctx.path
 		try {
-			const jsFilePath = path.resolve(__dirname, `../../../dist/server${urlPath}.js`)
+			const baseServerPath = path.resolve(__dirname, `../../../dist/server`)
+			const jsFilePath = `${baseServerPath}/${urlPath}.js`
 			if (serverFS.existsSync(jsFilePath)) {
 				const code = serverFS.readFileSync(jsFilePath, 'utf8')
+				const serverFiles = serverFS.readdirSync(baseServerPath)
+				serverFiles.forEach(file => {
+					console.log(file)
+				})
 
-				const tempTestFilePath = path.resolve(__dirname, `../../../dist/server${urlPath}_test.js`)
-				require('fs').writeFileSync(tempTestFilePath, code, 'utf8')
-				// const testfn = require(`../../../dist/server${urlPath}_test.js`)
-				// console.log('=====================', testfn.default())
+				// 检查文件夹路径是否存在
+				// if (!fs.existsSync(baseServerPath)) {
+				// 	// 如果文件夹路径不存在，使用 mkdirSync 创建文件夹
+				// 	// recursive: true 参数确保创建所有必需的父文件夹
+				// 	fs.mkdirSync(baseServerPath, { recursive: true })
+				// }
+				// const tempTestFilePath = `${baseServerPath}/${urlPath}_test.js`
+				// require('fs').writeFileSync(tempTestFilePath, code, 'utf8')
 
 				// const wrapper = NodeModule.wrap(code)
 				// // 创建一个新的脚本
@@ -70,7 +79,63 @@ function pageSSR(fsMap = {}) {
 				// 现在沙箱对象包含了文件中定义的方法，假设方法名为 myFunction
 				// const contentHtml = sandbox.default()
 
-				const htmlFilePath = path.resolve(__dirname, `../../../dist/client${urlPath}.html`)
+				const baseClientPath = path.resolve(__dirname, `../../../dist/client`)
+				const htmlFilePath = `${baseClientPath}${urlPath}.html`
+				// const files = clientFS.readdirSync(baseClientPath)
+				// // 打印文件夹内容列表
+				// files.forEach(file => {
+				// 	console.log(file)
+				// })
+
+				// 获取所有文件的路径
+				// const files = getAllFilesFromMemoryFs(clientFS, baseClientPath)
+
+				// console.log(files)
+
+				// 递归函数来获取所有文件
+				// eslint-disable-next-line no-inner-declarations
+				// function getAllFilesFromMemoryFs(fs, dirPath, arrayOfFiles) {
+				// 	const files = fs.readdirSync(dirPath)
+				// 	arrayOfFiles = arrayOfFiles || []
+
+				// 	files.forEach(function (file) {
+				// 		if (fs.statSync(dirPath + '/' + file).isDirectory()) {
+				// 			arrayOfFiles = getAllFilesFromMemoryFs(fs, dirPath + '/' + file, arrayOfFiles)
+				// 		} else {
+				// 			arrayOfFiles.push(path.join(dirPath, '/', file))
+				// 		}
+				// 	})
+
+				// 	return arrayOfFiles
+				// }
+
+				function readDirectory(fs, directory) {
+					// 获取当前目录下的所有文件和文件夹
+					const items = fs.readdirSync(directory)
+					let paths = []
+
+					items.forEach(item => {
+						const currentPath = directory + '/' + item
+						const isDirectory = fs.statSync(currentPath).isDirectory()
+
+						if (isDirectory) {
+							// 如果是文件夹，递归调用
+							paths = paths.concat(readDirectory(fs, currentPath))
+						} else {
+							// 如果是文件，添加到路径数组中
+							paths.push(currentPath)
+						}
+					})
+
+					return paths
+				}
+
+				// 调用 readDirectory 函数，从根目录开始递归遍历
+				const allPaths = readDirectory(clientFS, baseClientPath)
+
+				// 输出所有文件路径
+				console.log(allPaths)
+
 				if (clientFS.existsSync(htmlFilePath)) {
 					const template = clientFS.readFileSync(htmlFilePath, 'utf-8')
 					const head = Helmet.renderStatic()

@@ -75,48 +75,56 @@ options = {
 	path: '/assets/css/index.4b1cf9ca67c6727030a2.css',
 }
 
-// 创建请求对象
-const req = http.request(options, res => {
-	console.log(`状态码: ${res.statusCode}`) // 打印响应状态码
-	console.log('响应头: ', res.headers) // 打印响应头
+function sendRequest(data = {}) {
+	const requestInfo = {
+		...options,
+		...data,
+	}
+	// 创建请求对象
+	const req = http.request(requestInfo, res => {
+		console.log(`状态码: ${res.statusCode}`) // 打印响应状态码
+		console.log('响应头: ', res.headers) // 打印响应头
 
-	// 接收响应体数据
-	const rawData = []
-	const contentType = res.headers['content-type']
+		// 接收响应体数据
+		const rawData = []
+		const contentType = res.headers['content-type']
 
-	// 接收数据块并将其累积到 rawData 中
-	res.on('data', chunk => {
-		rawData.push(chunk)
-	})
+		// 接收数据块并将其累积到 rawData 中
+		res.on('data', chunk => {
+			rawData.push(chunk)
+		})
 
-	// 响应体接收完毕
-	res.on('end', () => {
-		console.log('响应体数据接收完毕')
-		try {
-			const buffer = Buffer.concat(rawData)
-			// 尝试根据 Content-Type 处理数据
-			if (contentType.includes('application/json')) {
-				// 处理 JSON 数据
-				const parsedData = JSON.parse(buffer.toString())
-				console.log(parsedData)
-			} else if (contentType.includes('text/plain') || contentType.includes('text/html')) {
-				// 处理文本数据
-				console.log(buffer.toString())
-			} else {
-				// 如果是其他类型的数据，如二进制文件，转换 Buffer 为字符串，假设字符编码为 UTF-8
-				const cssContent = buffer.toString('utf-8')
-				console.log(cssContent) // 正确打印 CSS 文件的内容
+		// 响应体接收完毕
+		res.on('end', () => {
+			console.log('响应体数据接收完毕')
+			try {
+				const buffer = Buffer.concat(rawData)
+				// 尝试根据 Content-Type 处理数据
+				if (contentType.includes('application/json')) {
+					// 处理 JSON 数据
+					const parsedData = JSON.parse(buffer.toString())
+					console.log(parsedData)
+				} else if (contentType.includes('text/plain') || contentType.includes('text/html')) {
+					// 处理文本数据
+					console.log(buffer.toString())
+				} else {
+					// 如果是其他类型的数据，如二进制文件，转换 Buffer 为字符串，假设字符编码为 UTF-8
+					const cssContent = buffer.toString('utf-8')
+					console.log(cssContent) // 正确打印 CSS 文件的内容
+				}
+			} catch (e) {
+				console.error(e.message) // 打印解析错误
 			}
-		} catch (e) {
-			console.error(e.message) // 打印解析错误
-		}
+		})
 	})
-})
 
-// 监听请求错误事件
-req.on('error', e => {
-	console.error(`请求遇到问题: ${e.message}`)
-})
+	// 监听请求错误事件
+	req.on('error', e => {
+		console.error(`请求遇到问题: ${e.message}`)
+	})
 
-// 结束请求，如果是 POST 或 PUT 请求，可以在这之前写入请求体数据
-req.end()
+	// 结束请求，如果是 POST 或 PUT 请求，可以在这之前写入请求体数据
+	req.end()
+}
+
+module.exports = sendRequest

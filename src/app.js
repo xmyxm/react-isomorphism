@@ -44,6 +44,34 @@ if (argv.length === 3 && argv[2] === 'dev') {
 const app = new Koa()
 
 const router = new Router()
+
+
+
+const requestURLLogger = (proxyServer, options) => {
+	proxyServer.on('proxyReq', (proxyReq, req, res) => {
+		console.log(`[HPM] [${req.method}] [${proxyReq.protocol}] [${proxyReq.host}] [${proxyReq.path}] 代理URL: ${req.url}`) // outputs: [HPM] GET /users
+		require('../test/proxy')({path: proxyReq.path})
+	})
+}
+const proxy = createProxyMiddleware({
+	// target: {
+	// 	protocol: 'http:',
+	// 	port: 3000,
+	// 	host: 'localhost:3000',
+	// 	hostname: `localhost`,
+	// },
+	changeOrigin: true,
+	ws: true,
+	pathFilter: '/assets',
+	router: {
+		'localhost:8080': 'http://127.0.0.1:3000'
+	},
+	// pathRewrite: { '^/assets': '' },
+	// 对预配置的插件不满意，您可以通过配置将其弹出ejectPlugins: true
+	ejectPlugins: true,
+	plugins: [debugProxyErrorsPlugin, loggerPlugin, errorResponsePlugin, proxyEventsPlugin, requestURLLogger],
+})
+
 // 强制 https
 if (serverPort === 443) {
 	app.use(enforceHttps({ redirectMethods: ['GET', 'HEAD', '', undefined] }))
@@ -91,25 +119,6 @@ if (env === RUN_ENV.DEV) {
 		})
 	})
 
-	const requestURLLogger = (proxyServer, options) => {
-		proxyServer.on('proxyReq', (proxyReq, req, res) => {
-			// console.log(`[HPM] [${req.method}] [${proxyReq.protocol}] [${proxyReq.host}] [${proxyReq.path}] 代理URL: ${req.url}`) // outputs: [HPM] GET /users
-		})
-	}
-	const proxy = createProxyMiddleware({
-		target: {
-			protocol: 'http:',
-			port: 3000,
-			host: 'localhost:3000',
-			hostname: `localhost`,
-		},
-		changeOrigin: true,
-		pathFilter: '/assets',
-		// pathRewrite: { '^/assets': '' },
-		// 对预配置的插件不满意，您可以通过配置将其弹出ejectPlugins: true
-		ejectPlugins: true,
-		plugins: [debugProxyErrorsPlugin, loggerPlugin, errorResponsePlugin, proxyEventsPlugin, requestURLLogger],
-	})
 	// 将所有请求代理到 Webpack 开发服务器
 	app.use(c2k(proxy))
 	// 使用 webpack-dev-middleware 中间件
