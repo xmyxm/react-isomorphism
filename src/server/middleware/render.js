@@ -10,7 +10,7 @@ const { Helmet } = require('react-helmet')
 const print = require('../util/print-log')
 
 // 页面优先走ssl逻辑
-function pageSSR(fsMap) {
+function render(fsMap) {
 	function middleware(ctx, next) {
 		const urlPath = ctx.path
 		try {
@@ -96,4 +96,4 @@ function pageSSR(fsMap) {
 	return middleware
 }
 
-module.exports = pageSSR
+module.exports = render

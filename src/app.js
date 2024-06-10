@@ -18,11 +18,10 @@ const {
 } = require('http-proxy-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const serverConfig = require('../webpack/webpack.server.beta.config')
-const staticServer = require('./server/middleware/filter-static')
-const initRouter = require('./server/middleware/filter-router')
 const betaConfig = require('../webpack/webpack.beta.config')
-const pageSSR = require('./server/middleware/filter-ssr')
-const actionAPI = require('./server/action/index')
+const staticServer = require('./server/middleware/file')
+const initRouter = require('./server/middleware/router')
+const render = require('./server/middleware/render')
 const print = require('./server/util/print-log')
 const RUN_ENV = require('./server/util/run-env')
 const getTime = require('./server/util/util')
@@ -142,10 +141,10 @@ if (env === RUN_ENV.DEV) {
 	// 使用 webpack-hot-middleware 中间件
 	app.use(c2k(webpackHotMiddleware(serverCompiler)))
 	// 服务端渲染 ssr
-	app.use(pageSSR(fsMap))
+	app.use(render(fsMap))
 } else {
 	// 服务端渲染 ssr
-	app.use(pageSSR({ serverFS: fs, clientFS: fs }))
+	app.use(render({ serverFS: fs, clientFS: fs }))
 	// 启动监听端口
 	if (serverPort === 443) {
 		// ssl 文件
