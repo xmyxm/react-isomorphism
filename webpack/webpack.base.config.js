@@ -34,13 +34,12 @@ module.exports = {
 			  test: /[\\/]node_modules[\\/]/, // 检测 node_modules 目录
 			  priority: -10, // 优先级
 			  reuseExistingChunk: true, // 如果当前 chunk 包含已从主 bundle 中分离的模块，则将重用它而不是生成新的 chunk
-			//   name(module, chunks, cacheGroupKey) {
-			// 	// 获取模块名称
-			// 	const moduleName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-			// 	// 用模块名和 cacheGroupKey 创建 chunk 名称
-			// 	return `${cacheGroupKey}.${moduleName.replace('@', '')}`;
-			//   },
-				name: 'vendors',
+			  name(module, chunks, cacheGroupKey) {
+				// 获取模块名称
+				const moduleName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+				// 用模块名和 cacheGroupKey 创建 chunk 名称
+				return `${cacheGroupKey}.${moduleName.replace('@', '')}`;
+			  },
 			},
 			default: {
 			  minChunks: 2, // 覆盖外部配置的 minChunks

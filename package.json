@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "node ./src/app.js",
 		"dev": "node ./src/app.js dev",
-		"start-client": "webpack serve --config ./webpack/webpack.beta.config.js",
+		"start-client": "webpack serve --config ./webpack/webpack.beta.config.js && http://127.0.0.1:3000/assets/index.html",
 		"beta": "webpack --config ./webpack/webpack.beta.config.js && webpack --config ./webpack/webpack.server.beta.config.js",
 		"build": "webpack --config ./webpack/webpack.server.pro.config.js; webpack --config ./webpack/webpack.pro.config.js",
 		"ts-build": "tsc -p ./webpack/tsconfig/tsconfig.client.json && tsc -p ./webpack/tsconfig/tsconfig.server.json",
