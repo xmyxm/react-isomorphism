@@ -44,6 +44,7 @@ module.exports = {
 	],
 	// 开启规则和发生错误时报告的等级
 	rules: {
+		'react/react-in-jsx-scope': 'off',
 		'no-use-before-define': 'off',
 		'no-plusplus': 'off',
 		'no-alert': 'off',

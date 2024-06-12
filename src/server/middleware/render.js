@@ -46,8 +46,8 @@ function render(fsMap) {
 				/// const script = new vm.Script(code, { filename: `server_ssr_${urlPath}.js` })
 				vm.runInContext(code, sandbox)
 
-				// const pageComponent = sandbox.exports.default()
-				const pageComponent = sandbox.module.exports.default()
+				const pageComponent = sandbox.exports.default()
+				// const pageComponent = sandbox.module.exports.default()
 				const contentHtml = renderToString(pageComponent)
 				// console.log(contentHtml)
 				// 创建一个沙箱环境
