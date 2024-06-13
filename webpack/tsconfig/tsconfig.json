@@ -14,7 +14,7 @@
 		"allowJs": true, // 允许编译 JavaScript 文件
 		"skipLibCheck": true, // 跳过库文件的类型检查
 		"esModuleInterop": true, // 启用 ES6 模块规范的交互行为
-		"noEmit": true, // 不生成输出文件
+		"noEmit": false, // 不生成输出文件
 		"importHelpers": true, // 从 tslib 导入辅助工具函数
 		"forceConsistentCasingInFileNames": true, // 禁止对同一个文件的不一致的大小写引用
 		"isolatedModules": true, // 将每个文件做为单独的模块 （与 'ts.transpileModule' 类似）.
