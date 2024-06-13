@@ -41,11 +41,11 @@ module.exports = {
 						return `${cacheGroupKey}.${moduleName.replace('@', '')}`
 					},
 				},
-				default: {
+				otherVendors: {
 					minChunks: 2, // 覆盖外部配置的 minChunks
 					priority: -20,
 					reuseExistingChunk: true,
-					name: 'othervendors',
+					name: 'otherVendors',
 				},
 				// 你可以在这里添加更多的配置来处理特定的公共模块
 			},
