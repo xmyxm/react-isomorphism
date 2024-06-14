@@ -42,6 +42,12 @@ module.exports = {
 		'html',
 		'markdown', // eslint-plugin-markdown 可以检查 Markdown、 HTML以及其它语言文件中的代码
 	],
+	overrides: [
+		{
+			files: ['*.md'],
+			processor: 'markdown/markdown',
+		},
+	],
 	// 开启规则和发生错误时报告的等级
 	rules: {
 		'no-use-before-define': 'off',
@@ -68,4 +74,4 @@ module.exports = {
 			version: 'detect',
 		},
 	},
-};
+}
