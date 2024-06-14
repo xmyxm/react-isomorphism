@@ -20,19 +20,38 @@ module.exports = {
 	devtool: 'source-map',
 	target: 'web',
 	optimization: {
+		chunkIds: 'deterministic',
 		splitChunks: {
+			chunks: 'all', // 对同步和异步 chunks 进行优化
+			minSize: 0, // 生成 chunk 的最小体积（以 bytes 为单位）
+			maxSize: 20000, // 0 表示没有限制
+			minChunks: 1, // 分割前必须共享模块的最小 chunks 数
+			maxAsyncRequests: 30, // 按需加载时的最大并行请求数
+			maxInitialRequests: 30, // 入口点的最大并行请求数
+			automaticNameDelimiter: '~', // 默认的 webpack chunk 名称连接符
 			cacheGroups: {
-				commons: {
-					name: 'commons',
-					chunks: 'initial',
-					minChunks: 2,
+				defaultVendors: {
+					test: /[\\/]node_modules[\\/]/, // 检测 node_modules 目录
+					priority: -10, // 优先级
+					reuseExistingChunk: true, // 如果当前 chunk 包含已从主 bundle 中分离的模块，则将重用它而不是生成新的 chunk
+					name(module, chunks, cacheGroupKey) {
+						// 获取模块名称
+						const moduleName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+						// 用模块名和 cacheGroupKey 创建 chunk 名称
+						return `${cacheGroupKey}.${moduleName.replace('@', '')}`
+					},
 				},
+				otherVendors: {
+					minChunks: 2, // 覆盖外部配置的 minChunks
+					priority: -20,
+					reuseExistingChunk: true,
+					name: 'otherVendors',
+				},
+				// 你可以在这里添加更多的配置来处理特定的公共模块
 			},
 		},
 		runtimeChunk: {
-			// manifest文件用来引导所有模块的交互。manifest文件包含了加载和处理模块的逻辑。
-			// 当webpack编译器处理和映射应用代码时，它把模块的详细的信息都记录到了manifest文件中。当模块被打包并运输到浏览器上时，
-			name: 'manifest',
+			name: entrypoint => `runtime~${entrypoint.name}`, // 为每个入口生成一个运行时文件
 		},
 	},
 	module: {
@@ -61,7 +80,7 @@ module.exports = {
 		],
 	},
 	resolve: {
-		extensions: ['.ts', '.jsx', '.tsx', '.js'],
+		extensions: ['.js', '.jsx', '.tsx', '.ts'],
 		// 别名设置,主要是为了配和webpack.ProvidePlugin设置全局插件;
 		alias: {
 			// 绝对路径;特别注意这里定义的路径和依赖的包名不能重名

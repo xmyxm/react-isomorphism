@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 import './index.less'
 
 export default function Foot(): ReactElement {
