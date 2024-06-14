@@ -4,7 +4,7 @@
 		/* 基本选项 */
 		"target": "esnext", // 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'
 		"module": "ES6", // 指定生成哪个模块系统代码： "None"， "CommonJS"， "AMD"， "System"， "UMD"， "ES6"或 "ES2015"。
-		// "lib": [], // 编译过程中需要引入的库文件的列表, 一般不要配置此选项
+		"lib": ["dom", "es2017"], // 用于指定编译过程中要包含的库文件。这些库文件是TypeScript提供的一组声明文件，用于描述JavaScript运行环境的API。这允许TypeScript知道某些全局变量或全局类型的存在，从而在不实际执行代码的情况下进行类型检查，"dom"：包含了浏览器环境中的所有DOM（文档对象模型）的类型定义，如 document 或 window。"es6"：包含了ECMAScript 2015（也称为ES6）的类型定义，如 Promise, Set, Map 等。"node"：为Node.js环境提供类型定义。
 		"checkJs": true, // 报告 javascript 文件中的错误, 必须配合allowJs使用
 		"jsx": "react-jsx", // "react": 将 JSX 转换为 React.createElement 调用，适用于 React 16 及之前的版本。"react-jsx": 使用新的 JSX 转换，适用于 React 17 及之后的版本，不需要导入 React。"react-jsxdev": 在开发模式下使用新的 JSX 转换，它包含额外的调试信息。"preserve": 保留 JSX 语法，后续可以通过 Babel 等工具进行转换
 		"declaration": true, // 生成相应的 '.d.ts' 文件
