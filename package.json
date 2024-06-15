@@ -9,7 +9,7 @@
 		"sc": "webpack serve --config ./webpack.config.js",
 		"beta": "webpack --config ./webpack/webpack.beta.config.js && webpack --config ./webpack/webpack.server.beta.config.js",
 		"build": "webpack --config ./webpack.config.js",
-		"ts-build": "tsc -p ./webpack/tsconfig/tsconfig.client.json && tsc -p ./webpack/tsconfig/tsconfig.server.json",
+		"ts-build": "tsc -p ./tsconfig.json",
 		"server-build-pro": "webpack --config ./webpack/webpack.server.pro.config.js",
 		"lint": "eslint src --fix --ext .ts --ext .tsx",
 		"write": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
