@@ -42,5 +42,6 @@
 		"dist",
 		"node_modules"
 	],
+	"include": ["./src/**/*.ts", "./src/**/*.tsx"], // 指定客户端代码的位置
 	"compileOnSave": true // 让IDE在保存文件的时候根据tsconfig.json重新生成文件
 }
