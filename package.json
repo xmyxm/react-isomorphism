@@ -6,13 +6,13 @@
 	"scripts": {
 		"start": "node ./src/app.js",
 		"dev": "node ./src/app.js dev",
-		"start-client": "webpack serve --config ./webpack/webpack.beta.config.js && http://127.0.0.1:3000/assets/index.html",
+		"sc": "webpack serve --config ./webpack.config.js",
 		"beta": "webpack --config ./webpack/webpack.beta.config.js && webpack --config ./webpack/webpack.server.beta.config.js",
-		"build": "webpack --config ./webpack/webpack.server.pro.config.js; webpack --config ./webpack/webpack.pro.config.js",
+		"build": "webpack --config ./webpack.config.js",
 		"ts-build": "tsc -p ./webpack/tsconfig/tsconfig.client.json && tsc -p ./webpack/tsconfig/tsconfig.server.json",
 		"server-build-pro": "webpack --config ./webpack/webpack.server.pro.config.js",
 		"lint": "eslint src --fix --ext .ts --ext .tsx",
-		"write": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\" \"./webpack/**\" \"./test/**\"",
+		"write": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
 		"prepare": "husky install"
 	},
 	"husky": {
@@ -53,6 +53,7 @@
 		"@commitlint/cli": "^16.2.1",
 		"@commitlint/config-conventional": "^16.2.1",
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.14",
+		"@types/react-dom": "^18.3.0",
 		"@types/react-helmet": "^6.1.11",
 		"@typescript-eslint/eslint-plugin": "^5.12.1",
 		"@typescript-eslint/parser": "^5.12.1",

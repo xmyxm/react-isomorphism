@@ -1,9 +1,0 @@
-{
-	"extends": "./tsconfig.json", // 继承共享的基础配置
-	"compilerOptions": {
-		"module": "commonjs", // Node.js 默认使用 CommonJS
-		"target": "es2019", // 根据你的 Node.js 版本选择合适的目标
-		"outDir": "../../dist/server" // 指定输出目录
-	},
-	"include": ["../../src/app/**/*"] // 指定服务端代码的位置
-}
