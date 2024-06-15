@@ -1,5 +1,6 @@
 const fs = require('fs')
 const Koa = require('koa')
+const path = require('path')
 const http = require('http')
 const https = require('https')
 const webpack = require('webpack')
@@ -34,15 +35,17 @@ let env = RUN_ENV.PRO
 
 let httpServer = null
 
-if (argv.length === 3 && argv[2] === 'dev') {
-	serverPort = 8080
-	env = RUN_ENV.DEV
+if (argv.length === 3) {
+	env = argv[2]
+	if (env === RUN_ENV.DEV || env === RUN_ENV.RC) {
+		serverPort = 8080
+	}
 }
 
 const app = new Koa()
 
 // 强制 https
-if (serverPort === 443) {
+if (env === RUN_ENV.PRO) {
 	app.use(enforceHttps({ redirectMethods: ['GET', 'HEAD', '', undefined] }))
 }
 // 启用协商缓存
@@ -142,15 +145,21 @@ if (env === RUN_ENV.DEV) {
 	app.use(c2k(webpackHotMiddleware(serverCompiler)))
 	// 服务端渲染 ssr
 	app.use(render(fsMap))
+} else if (env === RUN_ENV.RC) {
+	// 服务端渲染 ssr
+	app.use(render({ serverFS: fs, clientFS: fs }))
+	httpServer = http.createServer(app.callback()).listen(serverPort)
 } else {
 	// 服务端渲染 ssr
 	app.use(render({ serverFS: fs, clientFS: fs }))
 	// 启动监听端口
 	if (serverPort === 443) {
 		// ssl 文件
+		const keyPath = path.resolve(__dirname, `./server/config/ssl/www.qqweb.top.key`)
+		const pemPath = path.resolve(__dirname, `./server/config/ssl/www.qqweb.top.pem`)
 		const options = {
-			key: fs.readFileSync('./server/config/ssl/www.qqweb.top.key'),
-			cert: fs.readFileSync('./server/config/ssl/www.qqweb.top.pem'),
+			key: fs.readFileSync(keyPath),
+			cert: fs.readFileSync(pemPath),
 		}
 		https.createServer(options, app.callback()).listen(serverPort)
 		httpServer = http.createServer(app.callback()).listen(80)

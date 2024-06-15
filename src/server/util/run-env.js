@@ -1,7 +1,8 @@
 const RUN_ENV = {
-	PRO: 'production',
+	PRO: 'pro',
+	RC: 'rc',
 	BETA: 'beta',
-	DEV: 'development',
+	DEV: 'dev',
 }
 
 module.exports = RUN_ENV
