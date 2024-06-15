@@ -5,8 +5,13 @@ export default function Foot(): ReactElement {
 	return (
 		<div>
 			<footer className="footer">
-				<a className="link" rel="noopener noreferrer" target="_blank" href="https://beian.miit.gov.cn">
-					鄂ICP备2021011552号
+				<a
+					className="link"
+					rel="noopener noreferrer"
+					target="_blank"
+					href="https://github.com/xmyxm/react-isomorphism"
+				>
+					github link
 				</a>
 			</footer>
 		</div>

@@ -96,8 +96,8 @@ config.devServer = {
 	port: 3000, // 如果是小于1000的端口号，是需要sudo权限的，启用方式 sudo node server.js即可(可使用默认80端口)
 	historyApiFallback: {
 		rewrites: [
-			{ from: /./, to: '/assets/index.html' } // 默认回退页面
-		]
+			{ from: /./, to: '/assets/index.html' }, // 默认回退页面
+		],
 	}, // 如果在服务器上找不到请求的资源,那么服务器将返回指定的 index.html 页面,从而允许应用程序使用基于 HTML5 History API 的路由。这种情况通常发生在使用了 HTML5 History API 的单页应用程序中
 }
 
