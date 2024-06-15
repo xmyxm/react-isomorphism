@@ -13,7 +13,7 @@ module.exports = {
 		gzip,
 		maxage,
 		setHeaders: res => {
-			console.log(`写入请求头: ${res.path}`)
+			console.log(`返回 client 文件: ${res.req.url}`)
 		},
 	}),
 	commonStatic: serve(path.resolve(__dirname, '../../../webfile/'), {
@@ -21,7 +21,7 @@ module.exports = {
 		gzip,
 		maxage,
 		setHeaders: res => {
-			console.log(`写入请求头: ${res.path}`)
+			console.log(`返回 webfile 文件: ${res.req.url}`)
 		},
 	}),
 }

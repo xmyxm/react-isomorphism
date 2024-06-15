@@ -1,5 +1,5 @@
-const webpack = require('webpack')
 const path = require('path')
+const nodeExternals = require('webpack-node-externals')
 const BuildDonePlugin = require('./plugins/builddone')
 const packageFilePath = path.join(__dirname, '../dist/server')
 
@@ -83,6 +83,7 @@ module.exports = {
 		// 当从 npm 包中导入模块时（例如，import * as D3 from 'd3'），此选项将决定在 package.json 中使用哪个字段导入模块。根据 webpack 配置中指定的 target 不同，默认值也会有所不同。
 		mainFields: ['module', 'main'],
 	},
+	externals: [nodeExternals()], // 将 Node.js 核心模块排除在打包之外,以减小打包体积。
 	plugins: [
 		new BuildDonePlugin({ text: '编译完成' }),
 		//    new webpack.BannerPlugin('@web-little'),

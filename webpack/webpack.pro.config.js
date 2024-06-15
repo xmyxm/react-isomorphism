@@ -3,6 +3,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin') //webpack插件，用于清除目录文件
 const config = require('./webpack.base.config.js')
 
+config.output.publicPath = './'
 config.mode = 'production'
 config.devtool = 'nosources-source-map'
 config.module.rules.push(
