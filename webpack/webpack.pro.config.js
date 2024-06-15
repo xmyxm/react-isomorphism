@@ -14,7 +14,18 @@ config.module.rules.push(
 				loader: 'babel-loader',
 				options: {
 					presets: [
-						'@babel/preset-env', // 用于将现代 JavaScript 转换为兼容旧版环境的代码
+						[
+							'@babel/preset-env',
+							{
+								targets: {
+									browsers: ['last 2 versions', 'safari >= 7'],
+								},
+								modules: 'umd',
+								useBuiltIns: 'usage',
+								corejs: 3,
+								debug: false,
+							},
+						], // 用于将现代 JavaScript 转换为兼容旧版环境的代码
 						[
 							'@babel/preset-react',
 							{

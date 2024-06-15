@@ -12,7 +12,18 @@ config.module.rules.push(
 				loader: 'babel-loader',
 				options: {
 					presets: [
-						'@babel/preset-env', // 用于将现代 JavaScript 转换为兼容旧版环境的代码
+						[
+							'@babel/preset-env',
+							{
+								targets: {
+									browsers: ['last 2 versions', 'safari >= 7'],
+								},
+								modules: 'umd',
+								useBuiltIns: 'usage',
+								corejs: 3,
+								debug: true,
+							},
+						], // 用于将现代 JavaScript 转换为兼容旧版环境的代码
 						[
 							'@babel/preset-react',
 							{
@@ -83,7 +94,11 @@ config.devServer = {
 	hot: true, // 启用 webpack 的 模块热替换 特性：
 	host: 'localhost', //指定使用一个 host。默认是 localhost。如果你希望服务器外部可访问，指定为ip
 	port: 3000, // 如果是小于1000的端口号，是需要sudo权限的，启用方式 sudo node server.js即可(可使用默认80端口)
-	historyApiFallback: true, // 如果在服务器上找不到请求的资源,那么服务器将返回指定的 index.html 页面,从而允许应用程序使用基于 HTML5 History API 的路由。这种情况通常发生在使用了 HTML5 History API 的单页应用程序中
+	historyApiFallback: {
+		rewrites: [
+			{ from: /./, to: '/assets/index.html' } // 默认回退页面
+		]
+	}, // 如果在服务器上找不到请求的资源,那么服务器将返回指定的 index.html 页面,从而允许应用程序使用基于 HTML5 History API 的路由。这种情况通常发生在使用了 HTML5 History API 的单页应用程序中
 }
 
 config.plugins.push(
