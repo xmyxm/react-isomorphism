@@ -5,6 +5,7 @@ module.exports = {
 		'/api/login': 'login',
 		'/api/logout': 'logout',
 		'/api/reloadApp': 'reloadapp',
+		'/api/getWeather': 'weather',
 	},
 	PAGE: ['/index', '/note'],
 }

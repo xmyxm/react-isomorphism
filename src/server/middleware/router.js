@@ -28,7 +28,7 @@ function initRouter() {
 			}
 		})
 	} catch (err) {
-		console.error('api执行异常：', err.message)
+		console.error('api路由注册异常：', err.message)
 	}
 	return router
 }

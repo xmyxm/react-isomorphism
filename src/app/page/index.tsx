@@ -1,6 +1,7 @@
 import Head from '../component/head'
 import Main from '../component/main'
 import Foot from '../component/foot'
+import indexStore from '../store/index'
 import '../style/index.less'
 
 export function Index() {
@@ -11,6 +12,18 @@ export function Index() {
 			<Foot />
 		</div>
 	)
+}
+
+Index.sslLoad = async ctx => {
+	const { ssrInit } = indexStore((state: any) => ({
+		ssrInit: state.ssrInit,
+	}))
+	await ssrInit(ctx)
+}
+
+Index.sslState = () => {
+	const state = indexStore()
+	return state
 }
 
 export default Index

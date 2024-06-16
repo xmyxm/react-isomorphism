@@ -1,10 +1,12 @@
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
 // const NodeModule = require('module')
+const fs = require('fs')
 const vm = require('vm')
 const path = require('path')
 const React = require('react')
 const mustache = require('mustache')
+const serialize = require('serialize-javascript')
 const { renderToString } = require('react-dom/server')
 const routerConfig = require('../config/router')
 const { Helmet } = require('react-helmet')
@@ -12,7 +14,7 @@ const print = require('../util/print-log')
 
 // 页面优先走ssl逻辑
 function render(router, fsMap) {
-	function middleware(ctx, next) {
+	async function middleware(ctx, next) {
 		const urlPath = ctx.path
 		try {
 			const baseServerPath = path.resolve(__dirname, `../../../dist/server`)
@@ -21,13 +23,13 @@ function render(router, fsMap) {
 				const code = fsMap.serverFS.readFileSync(jsFilePath, 'utf8')
 
 				// 检查文件夹路径是否存在
-				// if (!fs.existsSync(baseServerPath)) {
-				// 	// 如果文件夹路径不存在，使用 mkdirSync 创建文件夹
-				// 	// recursive: true 参数确保创建所有必需的父文件夹
-				// 	fs.mkdirSync(baseServerPath, { recursive: true })
-				// }
-				// const tempTestFilePath = `${baseServerPath}/${urlPath}_test.js`
-				// require('fs').writeFileSync(tempTestFilePath, code, 'utf8')
+				if (!fs.existsSync(baseServerPath)) {
+					// 如果文件夹路径不存在，使用 mkdirSync 创建文件夹
+					// recursive: true 参数确保创建所有必需的父文件夹
+					fs.mkdirSync(baseServerPath, { recursive: true })
+				}
+				const tempTestFilePath = `${baseServerPath}/${urlPath}_test.js`
+				require('fs').writeFileSync(tempTestFilePath, code, 'utf8')
 
 				// 准备沙盒环境中的 module 和 exports 对象
 				const sandboxModule = { exports: {} }
@@ -47,9 +49,15 @@ function render(router, fsMap) {
 				/// const script = new vm.Script(code, { filename: `server_ssr_${urlPath}.js` })
 				vm.runInContext(code, sandbox)
 
-				// const pageComponent = sandbox.exports.default()
-				const pageComponent = sandbox.module.exports.default()
-				const contentHtml = renderToString(pageComponent)
+				const { default: pageComponent } = sandbox.module.exports
+				if (pageComponent.sslLoad) {
+					await pageComponent.sslLoad()
+				}
+				let initalState = null
+				if (pageComponent.sslState) {
+					initalState = pageComponent.sslState()
+				}
+				const contentHtml = renderToString(pageComponent())
 				// console.log(contentHtml)
 				// 创建一个沙箱环境
 				// const sandbox = { module: {}, console, require, process, global }
@@ -60,7 +68,9 @@ function render(router, fsMap) {
 				// console.log(compiledWrapper)
 				// 现在沙箱对象包含了文件中定义的方法，假设方法名为 myFunction
 				// const contentHtml = sandbox.default()
-
+				const stateHtml = `<script type="text/javascript">
+					window.__INITIAL_STATE__ = ${serialize(initalState || {}, { isJSON: true })}
+				</script>`
 				const htmlFilePath = path.resolve(__dirname, `../../../dist/client${urlPath}.html`)
 				if (fsMap.clientFS.existsSync(htmlFilePath)) {
 					const template = fsMap.clientFS.readFileSync(htmlFilePath, 'utf-8')
@@ -72,7 +82,7 @@ function render(router, fsMap) {
 				`
 					const pageHtml = mustache.render(template, {
 						reactSSRHead: headHtml,
-						reactSSRBody: contentHtml,
+						reactSSRBody: contentHtml + stateHtml,
 					})
 					ctx.body = pageHtml
 				} else {
