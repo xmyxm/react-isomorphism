@@ -6,11 +6,12 @@ const path = require('path')
 const React = require('react')
 const mustache = require('mustache')
 const { renderToString } = require('react-dom/server')
+const routerConfig = require('../config/router')
 const { Helmet } = require('react-helmet')
 const print = require('../util/print-log')
 
 // 页面优先走ssl逻辑
-function render(fsMap) {
+function render(router, fsMap) {
 	function middleware(ctx, next) {
 		const urlPath = ctx.path
 		try {
@@ -93,7 +94,10 @@ function render(fsMap) {
 		}
 	}
 
-	return middleware
+	const methods = ['HEAD', 'OPTIONS', 'GET', 'POST']
+	routerConfig.PAGE.forEach(path => {
+		router.register(path, methods, middleware)
+	})
 }
 
 module.exports = render

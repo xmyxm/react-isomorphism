@@ -22,7 +22,7 @@ const serverConfig = require('../webpack/webpack.server.beta.config')
 const betaConfig = require('../webpack/webpack.beta.config')
 const staticServer = require('./server/middleware/file')
 const initRouter = require('./server/middleware/router')
-const render = require('./server/middleware/render')
+const initRender = require('./server/middleware/render')
 const print = require('./server/util/print-log')
 const RUN_ENV = require('./server/util/run-env')
 const getTime = require('./server/util/util')
@@ -63,14 +63,11 @@ app.use(async (ctx, next) => {
 })
 // 文章内容解析服务
 const router = initRouter()
-// 将路由注册为中间件
-app.use(router.routes())
-// 用于根据 router.routes() 中定义的路由自动设置响应头部 Allow。如果收到了一个没有定义处理函数的请求方法（例如，对于一个只定义了 GET 处理函数的路由，收到了一个 POST 请求），这个中间件会返回 405 Method Not Allowed 或 501 Not Implemented。
-// 此外，这个中间件也提供了对 OPTIONS 请求的响应，自动返回服务器所支持的方法。这对于 RESTful API 的开发尤其有用，因为客户端可以通过发送 OPTIONS 请求来了解服务器支持哪些 HTTP 方法
-app.use(router.allowedMethods())
+
+// 文件读写
+const fsMap = { serverFS: fs, clientFS: fs }
 
 if (env === RUN_ENV.DEV) {
-	const fsMap = {}
 	const clientCompiler = webpack(betaConfig)
 	// 监听 'compile' 事件，它在编译开始时触发
 	clientCompiler.hooks.compile.tap('compile', () => {
@@ -143,25 +140,28 @@ if (env === RUN_ENV.DEV) {
 
 	// 使用 webpack-hot-middleware 中间件
 	app.use(c2k(webpackHotMiddleware(serverCompiler)))
-	// 服务端渲染 ssr
-	app.use(render(fsMap))
-} else if (env === RUN_ENV.RC) {
-	// 服务端渲染 ssr
-	app.use(render({ serverFS: fs, clientFS: fs }))
+}
+
+// 注册服务端渲染路由 ssr
+initRender(router, fsMap)
+// 将路由注册为中间件
+app.use(router.routes())
+// 用于根据 router.routes() 中定义的路由自动设置响应头部 Allow。如果收到了一个没有定义处理函数的请求方法（例如，对于一个只定义了 GET 处理函数的路由，收到了一个 POST 请求），这个中间件会返回 405 Method Not Allowed 或 501 Not Implemented。
+// 此外，这个中间件也提供了对 OPTIONS 请求的响应，自动返回服务器所支持的方法。这对于 RESTful API 的开发尤其有用，因为客户端可以通过发送 OPTIONS 请求来了解服务器支持哪些 HTTP 方法
+app.use(router.allowedMethods())
+
+if (env === RUN_ENV.RC) {
 	httpServer = http.createServer(app.callback()).listen(serverPort)
-} else {
-	// 服务端渲染 ssr
-	app.use(render({ serverFS: fs, clientFS: fs }))
-	// 启动监听端口
-	if (serverPort === 443) {
-		// ssl 文件
-		const keyPath = path.resolve(__dirname, `./server/config/ssl/www.qqweb.top.key`)
-		const pemPath = path.resolve(__dirname, `./server/config/ssl/www.qqweb.top.pem`)
-		const options = {
-			key: fs.readFileSync(keyPath),
-			cert: fs.readFileSync(pemPath),
-		}
-		https.createServer(options, app.callback()).listen(serverPort)
-		httpServer = http.createServer(app.callback()).listen(80)
+} else if (env === RUN_ENV.RC) {
+	// ssl 文件
+	const keyPath = path.resolve(__dirname, `./server/config/ssl/www.qqweb.top.key`)
+	const pemPath = path.resolve(__dirname, `./server/config/ssl/www.qqweb.top.pem`)
+	const options = {
+		key: fs.readFileSync(keyPath),
+		cert: fs.readFileSync(pemPath),
 	}
+	// 启动监听443端口
+	https.createServer(options, app.callback()).listen(serverPort)
+	// 启动监听80端口
+	httpServer = http.createServer(app.callback()).listen(80)
 }

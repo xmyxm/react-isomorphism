@@ -24,7 +24,7 @@ export default function Head(props: Props): ReactElement {
 	return (
 		<div>
 			<Helmet>
-				<title>欢迎！</title>
+				<title>welcome！</title>
 				<meta name="keywords" content="同构SEO" />
 			</Helmet>
 			<header className="header">
