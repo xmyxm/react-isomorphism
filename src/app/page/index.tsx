@@ -15,10 +15,9 @@ export function Index() {
 }
 
 Index.sslLoad = async ctx => {
-	const { ssrInit } = indexStore((state: any) => ({
-		ssrInit: state.ssrInit,
-	}))
-	await ssrInit(ctx)
+	console.log('------------------------ sslLoad')
+	const ssrInit = indexStore.getState().ssrInit
+	await ssrInit(ctx);
 }
 
 Index.sslState = () => {

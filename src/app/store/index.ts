@@ -8,6 +8,7 @@ const indexStore = create((set, get: any) => ({
 	},
 	// 客户端初始化代码
 	async ssrInit(ctx) {
+		console.log('------------------------ 发请求')
 		await get().getPageData(ctx)
 	},
 	// 客户端初始化代码
