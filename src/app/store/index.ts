@@ -3,7 +3,7 @@ import loading, { ExtraModelsFromLoading } from '@rematch/loading'
 import updated, { ExtraModelsFromUpdated } from '@rematch/updated'
 import persist from '@rematch/persist'
 import storage from 'redux-persist/lib/storage'
-// import immerPlugin from '@rematch/immer'
+import immerPlugin from '@rematch/immer'
 import selectPlugin from '@rematch/select'
 import { models, RootModel } from './models'
 
@@ -23,9 +23,9 @@ export function createStore(initialState) {
 				storage,
 				whitelist: ['settings'],
 			}),
-			// immerPlugin({
-			// 	whitelist: ['settings'],
-			// }),
+			immerPlugin({
+				whitelist: ['settings'],
+			}),
 			selectPlugin(),
 		],
 	})
