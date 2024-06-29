@@ -6,6 +6,8 @@ module.exports = {
 		'/api/logout': 'logout',
 		'/api/reloadApp': 'reloadapp',
 		'/api/getWeather': 'weather',
+		'/api/whtrip': 'whtrip',
+		'/api/whtripdetail': 'whtripdetail',
 	},
 	PAGE: ['/index', '/note'],
 }

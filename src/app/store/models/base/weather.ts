@@ -1,13 +1,13 @@
 import { createModel } from '@rematch/core'
-import weatherService from '../service/weather'
-import type { RootModel } from '.'
+import weatherService from '../../service/weather'
+import type { IndexModel } from './modelType'
 
-export const weather = createModel<RootModel>()({
+export const weather = createModel<IndexModel>()({
 	state: {
 		weatherInfo: null,
 	},
 	reducers: {
-		SET_PLAYERS: (state, players) => {
+		SET_WEATHER: (state, players) => {
 			return {
 				...state,
 				weatherInfo: players,
@@ -15,11 +15,10 @@ export const weather = createModel<RootModel>()({
 		},
 	},
 	effects: dispatch => {
-		const { weather } = dispatch
 		return {
 			async getWeatherInfo(ctx): Promise<any> {
 				const weatherInfo = await weatherService.getWeatherInfo(null, ctx)
-				weather.SET_PLAYERS(weatherInfo)
+				dispatch.weather.SET_WEATHER(weatherInfo)
 			},
 		}
 	},

@@ -1,8 +1,6 @@
 import { init, RematchDispatch, RematchRootState } from '@rematch/core'
 import loading, { ExtraModelsFromLoading } from '@rematch/loading'
 import updated, { ExtraModelsFromUpdated } from '@rematch/updated'
-import persist from '@rematch/persist'
-import storage from 'redux-persist/lib/storage'
 import immerPlugin from '@rematch/immer'
 import selectPlugin from '@rematch/select'
 import { models, RootModel } from './models'
@@ -18,11 +16,6 @@ export function createStore(initialState) {
 		plugins: [
 			updated(),
 			loading(),
-			persist({
-				key: 'persist-storage',
-				storage,
-				whitelist: ['settings'],
-			}),
 			immerPlugin({
 				whitelist: ['settings'],
 			}),

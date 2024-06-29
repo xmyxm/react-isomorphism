@@ -1,9 +1,9 @@
 const axios = require('axios')
 
 async function getWeather(ctx) {
-	// 灯塔一组 经度112.1450944°，纬度31.2990765°
-	// 雅居乐 经度114.3863532°，纬度30.4079140°
-	const { lat = '30.4079140', lon = '114.3863532', type = '0' } = ctx.query
+	// 国家气象中心：http://m.nmc.cn/publish/forecast/AHB/wuhan.html
+	// 武汉 57494、上海 58367、荆门 57377
+	const { cityid = 57494 } = ctx.query
 
 	const result = {
 		code: 200,
@@ -11,10 +11,26 @@ async function getWeather(ctx) {
 		msg: '成功',
 	}
 
+	const url = `http://www.nmc.cn/rest/real/${cityid}`
+
+	// const headers = {
+	// 	Accept: 'application/json, text/javascript, */*; q=0.01',
+	// 	'Accept-Encoding': 'gzip, deflate',
+	// 	'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+	// 	'Cache-Control': 'no-cache',
+	// 	Connection: 'keep-alive',
+	// 	Host: 'www.nmc.cn',
+	// 	Origin: 'http://m.nmc.cn',
+	// 	Pragma: 'no-cache',
+	// 	Referer: 'http://m.nmc.cn/',
+	// 	'User-Agent':
+	// 		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+	// }
+
 	const weatherInfo = await axios({
-		method: 'post',
-		data: { lat, lon, type },
-		url: 'https://data.cma.cn/kbweb/home/live',
+		method: 'get',
+		// headers,
+		url,
 	})
 		.then(response => {
 			return response.data

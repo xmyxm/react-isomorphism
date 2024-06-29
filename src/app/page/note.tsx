@@ -1,3 +1,4 @@
+import { Provider } from 'react-redux'
 import Head from '../component/head'
 import Main from '../component/main'
 import Foot from '../component/foot'
@@ -10,17 +11,17 @@ const store = createStore(initialState)
 
 export function Note() {
 	return (
-		<div>
+		<Provider store={store}>
 			<Head title="React SSR Little" />
 			<Main name="Note" to="index" />
 			<Foot />
-		</div>
+		</Provider>
 	)
 }
 
 Note.sslLoad = async ctx => {
-	console.log('------------- note ssr request')
-	await store.dispatch.user.getUserInfo(ctx)
+	console.log('------------- index sslLoad')
+	await store.dispatch.tripDetail.getTripDetailList(ctx)
 }
 
 Note.sslState = (): any => {

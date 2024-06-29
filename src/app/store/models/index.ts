@@ -1,14 +1,5 @@
-import { Models } from '@rematch/core'
-import { players } from './players'
-import { settings } from './settings'
-import { weather } from './weather'
-import { cart } from './cart'
+import { weather } from './base/weather'
+import { tripMenu } from './base/tripmenu'
+import { IndexModel } from './base/modelType'
 
-export interface RootModel extends Models<RootModel> {
-	players: typeof players
-	cart: typeof cart
-	settings: typeof settings
-	weather: typeof weather
-}
-
-export const models: RootModel = { players, settings, cart, weather }
+export const models: IndexModel = { weather, tripMenu }

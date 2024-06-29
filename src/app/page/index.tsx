@@ -1,3 +1,4 @@
+import { Provider } from 'react-redux'
 import Head from '../component/head'
 import Main from '../component/main'
 import Foot from '../component/foot'
@@ -9,17 +10,17 @@ const initialState = typeof window === 'object' ? (window as any).__INITIAL_STAT
 const store = createStore(initialState)
 export function Index() {
 	return (
-		<div>
+		<Provider store={store}>
 			<Head title="React SSR Little" />
 			<Main name="Index" to="note" />
 			<Foot />
-		</div>
+		</Provider>
 	)
 }
 
 Index.sslLoad = async ctx => {
-	console.log('------------- index ssr request')
-	await store.dispatch.weather.getWeatherInfo(ctx)
+	console.log('------------- index sslLoad')
+	await Promise.all([store.dispatch.weather.getWeatherInfo(ctx), store.dispatch.tripMenu.getTripMenuList(ctx)])
 }
 
 Index.sslState = (): any => {

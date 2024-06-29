@@ -1,10 +1,4 @@
-import { Models } from '@rematch/core'
-import { user } from './user'
-import { review } from './review'
+import { tripDetail } from './base/tripdetail'
+import { NoteModel } from './base/modelType'
 
-export interface NoteRootModel extends Models<NoteRootModel> {
-	user: typeof user
-	review: typeof review
-}
-
-export const models: NoteRootModel = { user, review }
+export const models: NoteModel = { tripDetail }
