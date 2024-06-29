@@ -1,9 +1,12 @@
 import Head from '../component/head'
 import Main from '../component/main'
 import Foot from '../component/foot'
-import indexStore from '../store/index'
+import { createStore } from '../store/index'
 import '../style/index.less'
 
+const initialState = typeof window === 'object' ? window.__INITIAL_STATE__ : {} // eslint-disable-line
+
+const store = createStore(initialState)
 export function Index() {
 	return (
 		<div>
@@ -16,12 +19,11 @@ export function Index() {
 
 Index.sslLoad = async ctx => {
 	console.log('------------------------ sslLoad')
-	const ssrInit = indexStore.getState().ssrInit
-	await ssrInit(ctx);
+	await store.dispatch.weather.getWeatherInfo(ctx)
 }
 
 Index.sslState = () => {
-	const state = indexStore()
+	const state = store.getState()
 	return state
 }
 

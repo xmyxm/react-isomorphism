@@ -6,10 +6,10 @@ const vm = require('vm')
 const path = require('path')
 const React = require('react')
 const mustache = require('mustache')
+const { Helmet } = require('react-helmet')
 const serialize = require('serialize-javascript')
 const { renderToString } = require('react-dom/server')
 const routerConfig = require('../config/router')
-const { Helmet } = require('react-helmet')
 const print = require('../util/print-log')
 
 // 页面优先走ssl逻辑
@@ -49,7 +49,7 @@ function render(router, fsMap) {
 				/// const script = new vm.Script(code, { filename: `server_ssr_${urlPath}.js` })
 				vm.runInContext(code, sandbox)
 
-				const { default: pageComponent } = sandbox.module.exports
+				const { default: pageComponent } = sandbox.exports || sandbox.module.exports
 				if (pageComponent.sslLoad) {
 					await pageComponent.sslLoad()
 				}
@@ -105,8 +105,8 @@ function render(router, fsMap) {
 	}
 
 	const methods = ['HEAD', 'OPTIONS', 'GET', 'POST']
-	routerConfig.PAGE.forEach(path => {
-		router.register(path, methods, middleware)
+	routerConfig.PAGE.forEach(jsFilePath => {
+		router.register(jsFilePath, methods, middleware)
 	})
 }
 

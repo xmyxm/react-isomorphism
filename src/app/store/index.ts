@@ -1,28 +1,35 @@
-import { createSlice } from '@reduxjs/toolkit'
-import weatherServer from '../server/weather'
+import { init, RematchDispatch, RematchRootState } from '@rematch/core'
+import loading, { ExtraModelsFromLoading } from '@rematch/loading'
+import updated, { ExtraModelsFromUpdated } from '@rematch/updated'
+import persist from '@rematch/persist'
+import storage from 'redux-persist/lib/storage'
+// import immerPlugin from '@rematch/immer'
+import selectPlugin from '@rematch/select'
+import { models, RootModel } from './models'
 
-https://juejin.cn/post/7190642427026210876
-https://blog.csdn.net/weixin_57017198/article/details/133796912
+type FullModel = ExtraModelsFromLoading<RootModel> & ExtraModelsFromUpdated<RootModel>
 
-const indexStore = createSlice({
-	name: 'index-slice',
-	initialState: {
-		weatherInfo: null
-	},
-	reducers: {
-		// 客户端初始化代码
-		async ssrInit(ctx) {
-			console.log('------------------------ 发请求')
-			await get().getPageData(ctx)
+export function createStore(initialState) {
+	return init<RootModel, FullModel>({
+		models,
+		redux: {
+			initialState,
 		},
-		// 客户端初始化代码
-		async clientInit() {},
+		plugins: [
+			updated(),
+			loading(),
+			persist({
+				key: 'persist-storage',
+				storage,
+				whitelist: ['settings'],
+			}),
+			// immerPlugin({
+			// 	whitelist: ['settings'],
+			// }),
+			selectPlugin(),
+		],
+	})
+}
 
-		// 页面请求
-		async getPageData(ctx) {
-			const weatherInfo = await weatherServer.getWeatherInfo(null, ctx)
-			set({ weatherInfo })
-		},
-	}
-})
-
+export type Dispatch = RematchDispatch<RootModel>
+export type RootState = RematchRootState<RootModel, FullModel>

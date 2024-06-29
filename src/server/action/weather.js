@@ -14,10 +14,11 @@ async function getWeather(ctx) {
 		data: { lat, lon, type },
 		url: 'https://data.cma.cn/kbweb/home/live',
 	})
-		.then(function (response) {
+		.then(response => {
 			return response.data
 		})
 		.catch(err => {
+			result.msg = err.message
 			console.log(err)
 			return null
 		})
