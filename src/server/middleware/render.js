@@ -51,7 +51,7 @@ function render(router, fsMap) {
 
 				const { default: pageComponent } = sandbox.exports || sandbox.module.exports
 				if (pageComponent.sslLoad) {
-					await pageComponent.sslLoad()
+					await pageComponent.sslLoad(ctx)
 				}
 				let initalState = null
 				if (pageComponent.sslState) {

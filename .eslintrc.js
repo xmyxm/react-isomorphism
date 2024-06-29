@@ -57,8 +57,10 @@ module.exports = {
 		'class-methods-use-this': 'off',
 		'no-restricted-globals': 'off',
 		'no-console': 'off',
+		'no-underscore-dangle': 'off', // 不能使用下划线
 		'object-curly-newline': 'off',
 		'import/no-unresolved': 'off',
+		'import/prefer-default-export': 'off',
 		'no-multi-assign': 'off', // 链接变量的赋值可能会导致意外的结果并难以阅读 https://cloud.tencent.com/developer/section/1135717
 		'@typescript-eslint/ban-ts-ignore': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',

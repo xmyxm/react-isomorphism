@@ -4,7 +4,7 @@ import Foot from '../component/foot'
 import { createStore } from '../store/index'
 import '../style/index.less'
 
-const initialState = typeof window === 'object' ? window.__INITIAL_STATE__ : {} // eslint-disable-line
+const initialState = typeof window === 'object' ? (window as any).__INITIAL_STATE__ : {}
 
 const store = createStore(initialState)
 export function Index() {
@@ -18,11 +18,11 @@ export function Index() {
 }
 
 Index.sslLoad = async ctx => {
-	console.log('------------------------ sslLoad')
+	console.log('------------- index ssr request')
 	await store.dispatch.weather.getWeatherInfo(ctx)
 }
 
-Index.sslState = () => {
+Index.sslState = (): any => {
 	const state = store.getState()
 	return state
 }

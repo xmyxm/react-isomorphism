@@ -15,11 +15,11 @@ export const weather = createModel<RootModel>()({
 		},
 	},
 	effects: dispatch => {
-		const { players } = dispatch
+		const { weather } = dispatch
 		return {
 			async getWeatherInfo(ctx): Promise<any> {
 				const weatherInfo = await weatherService.getWeatherInfo(null, ctx)
-				players.SET_PLAYERS(weatherInfo)
+				weather.SET_PLAYERS(weatherInfo)
 			},
 		}
 	},
