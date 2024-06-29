@@ -3,12 +3,13 @@ import loading, { ExtraModelsFromLoading } from '@rematch/loading'
 import updated, { ExtraModelsFromUpdated } from '@rematch/updated'
 import immerPlugin from '@rematch/immer'
 import selectPlugin from '@rematch/select'
-import { models, RootModel } from './models'
+import { IndexModel } from './models/base/modelType'
+import { models } from './models/index'
 
-type FullModel = ExtraModelsFromLoading<RootModel> & ExtraModelsFromUpdated<RootModel>
+type FullModel = ExtraModelsFromLoading<IndexModel> & ExtraModelsFromUpdated<IndexModel>
 
 export function createStore(initialState) {
-	return init<RootModel, FullModel>({
+	return init<IndexModel, FullModel>({
 		models,
 		redux: {
 			initialState,
@@ -24,5 +25,5 @@ export function createStore(initialState) {
 	})
 }
 
-export type Dispatch = RematchDispatch<RootModel>
-export type RootState = RematchRootState<RootModel, FullModel>
+export type Dispatch = RematchDispatch<IndexModel>
+export type RootState = RematchRootState<IndexModel, FullModel>

@@ -1,5 +1,4 @@
 import { ReactElement } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import './index.less'
 
 export interface Props {
@@ -7,11 +6,11 @@ export interface Props {
 	to?: string
 }
 
-export default function Main(props: Props): ReactElement {
+export default function Brand(props: Props): ReactElement {
 	const { name = 'Index', to = 'note' } = props
 
 	return (
-		<div className="main">
+		<div className="brand">
 			<div className="content">
 				<div className="logo"></div>
 				<div className="info">

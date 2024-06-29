@@ -1,6 +1,7 @@
 import { Provider } from 'react-redux'
 import Head from '../component/head'
-import Main from '../component/main'
+import Brand from '../component/brand'
+import Weather from '../component/weather'
 import Foot from '../component/foot'
 import { createStore } from '../store/index'
 import '../style/index.less'
@@ -12,7 +13,8 @@ export function Index() {
 	return (
 		<Provider store={store}>
 			<Head title="React SSR Little" />
-			<Main name="Index" to="note" />
+			<Brand name="Index" to="note" />
+			<Weather />
 			<Foot />
 		</Provider>
 	)

@@ -1,11 +1,12 @@
 import { createModel } from '@rematch/core'
 import weatherService from '../../service/weather'
+import { WeatherStateType } from './type/weatherInfoType'
 import type { IndexModel } from './modelType'
 
 export const weather = createModel<IndexModel>()({
 	state: {
 		weatherInfo: null,
-	},
+	} as WeatherStateType,
 	reducers: {
 		SET_WEATHER: (state, players) => {
 			return {
