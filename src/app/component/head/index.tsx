@@ -17,10 +17,6 @@ export default function Head(props: Props): ReactElement {
 		}, 1000)
 	}, [dateText])
 
-	const goHome = useCallback(() => {
-		window.location.href = location.origin
-	}, [])
-
 	return (
 		<div>
 			<Helmet>
@@ -28,9 +24,9 @@ export default function Head(props: Props): ReactElement {
 				<meta name="keywords" content="同构SEO" />
 			</Helmet>
 			<header className="header">
-				<div onClick={goHome} className="title">
-					<i className="logo-icon"></i>
-					<span>{title}</span>
+				<div className='logo'></div>
+				<div className="title">
+					{title}
 				</div>
 				<div className="time">{dateText}</div>
 			</header>
