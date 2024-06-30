@@ -1,8 +1,40 @@
 .weather {
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	padding: 10px 0;
 	margin: 10px;
 	white-space: pre-wrap;
+
+	.title ,.temperature, .detaillist {
+		display: flex;
+		align-items: center;
+	}
+
+	.title {
+		justify-content: space-between;
+
+		.locicon {
+			display: block;
+			width: 20px;
+			height: 20px;
+			background-image: url('../../assets/img/location.png');
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+		}
+	}
+
+	.temperature {
+		height: 80px;
+		justify-content: center;
+	}
+
+	.detaillist {
+		justify-content: space-between;
+
+		
+
+		.icon {
+			width: 40px;
+			height: 40px;
+		}
+	}
+
 }
