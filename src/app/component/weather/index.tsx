@@ -33,22 +33,22 @@ export default function Weather(): ReactElement | null {
 			</div>
 			<div className="detaillist">
 				<div className="info-item">
-					<img className="icon" />
+					<div className="icon-yudi"></div>
 					<div className="text">降水量</div>
 					<div className="text">{rain}mm</div>
 				</div>
 				<div className="info-item">
-					<div className="icon"></div>
+					<div className="icon-qiya"></div>
 					<div className="text">气压</div>
 					<div className="text">{airpressure}hpa</div>
 				</div>
 				<div className="info-item">
-					<div className="icon"></div>
+					<div className="icon-shidu"></div>
 					<div className="text">湿度</div>
 					<div className="text">{humidity}%</div>
 				</div>
 				<div className="info-item">
-					<div className="icon"></div>
+					<div className="icon-fengsu"></div>
 					<div className="text">{direct}</div>
 					<div className="text">{power}</div>
 				</div>

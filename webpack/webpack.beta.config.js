@@ -58,15 +58,10 @@ config.module.rules.push(
 	},
 	{
 		test: /\.(jpe?g|png|gif|svg|ico)$/i,
-		use: [
-			{
-				loader: 'url-loader',
-				options: {
-					name: 'img/[name].[ext]',
-					limit: 1000,
-				},
-			},
-		],
+		type: 'asset/resource',
+		generator: {
+			filename: 'img/[name].[hash:6][ext]',
+		},
 	},
 )
 config.devServer = {
