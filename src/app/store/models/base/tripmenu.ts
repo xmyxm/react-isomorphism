@@ -1,24 +1,25 @@
 import { createModel } from '@rematch/core'
 import tripService from '../../service/trip'
+import { TripMenuStateType } from './type/tripmenuType'
 import type { IndexModel } from './modelType'
 
 export const tripMenu = createModel<IndexModel>()({
 	state: {
-		tripMenuList: null,
-	},
+		tripMenuInfo: null,
+	} as TripMenuStateType,
 	reducers: {
 		SET_MENU_LIST: (state, players) => {
 			return {
 				...state,
-				tripMenuList: players,
+				tripMenuInfo: players,
 			}
 		},
 	},
 	effects: dispatch => {
 		return {
 			async getTripMenuList(ctx): Promise<any> {
-				const menuList = await tripService.getTripMenuList(null, ctx)
-				dispatch.tripMenu.SET_MENU_LIST(menuList)
+				const tripMenuInfo = await tripService.getTripMenuList(null, ctx)
+				dispatch.tripMenu.SET_MENU_LIST(tripMenuInfo)
 			},
 		}
 	},
