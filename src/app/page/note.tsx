@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux'
 import Head from '../component/head'
-import TripDetail from '../component/tripdetail'
 import Foot from '../component/foot'
+import TripDetail from '../component/tripdetail'
 import { createStore } from '../store/note'
 import '../style/note.less'
 

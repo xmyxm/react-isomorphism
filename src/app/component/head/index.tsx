@@ -24,10 +24,8 @@ export default function Head(props: Props): ReactElement {
 				<meta name="keywords" content="同构SEO" />
 			</Helmet>
 			<header className="header">
-				<div className='logo'></div>
-				<div className="title">
-					{title}
-				</div>
+				<div className="logo"></div>
+				<div className="title">{title}</div>
 				<div className="time">{dateText}</div>
 			</header>
 			<div className="headerbox"></div>
