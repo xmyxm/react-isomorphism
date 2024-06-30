@@ -19,8 +19,8 @@ export default function TripDetail(): ReactElement | null {
 			{renderConfig ? (
 				<table className="detaillist">
 					<thead>
-						<tr>
-							<th className="head-xh">序号</th>
+						<tr className="head-item">
+							<th className="xh">序号</th>
 							{renderConfig.headers.map(text => {
 								return <th key={text}>{text}</th>
 							})}
@@ -31,7 +31,7 @@ export default function TripDetail(): ReactElement | null {
 						{list
 							? list.map((item: TripDetailItemType, index) => {
 									return (
-										<tr key={item.ID} className="item">
+										<tr key={item.ID} className="body-item">
 											<td>{index + 1}</td>
 											{renderConfig.columns.map(key => {
 												return <td key={key}>{item[key]}</td>
