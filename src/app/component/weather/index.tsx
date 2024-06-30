@@ -8,8 +8,6 @@ import './index.less'
 export default function Weather(): ReactElement | null {
 	// @ts-ignore
 	const weatherState: WeatherStateType = useSelector((state: IndexModel) => state.weather)
-	// const menuState = useSelector((state: IndexModel) => state.tripMenu)
-	// const dispatch = useDispatch<Dispatch>()
 
 	if (!weatherState.weatherInfo) return null
 
@@ -55,7 +53,6 @@ export default function Weather(): ReactElement | null {
 					<div className="text">{power}</div>
 				</div>
 			</div>
-			{/* {JSON.stringify(weatherState.weatherInfo || {})} */}
 		</div>
 	)
 }

@@ -13,7 +13,6 @@ export default function TripDetail(): ReactElement | null {
 
 	const { title, renderConfig, list } = tripMenuState.tripDetailInfo
 
-	// {"ID":"1","DJ":"AAAAA","DZ":"武昌蛇山西山坡1号","DH":"027-88877330","MC":"武汉市黄鹤楼公园","JD":"114.306091","WD":"30.544071"}
 	return (
 		<div className="tripdetail">
 			<div className="title">{title}</div>
@@ -21,8 +20,9 @@ export default function TripDetail(): ReactElement | null {
 				<table className="detaillist">
 					<thead>
 						<tr>
+							<th className="head-xh">序号</th>
 							{renderConfig.headers.map(text => {
-								return <th>{text}</th>
+								return <th key={text}>{text}</th>
 							})}
 						</tr>
 					</thead>

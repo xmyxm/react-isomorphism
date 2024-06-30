@@ -1,5 +1,5 @@
 const config = {
-	title: '文旅名录',
+	title: '武汉文旅名录',
 	list: [
 		{
 			name: '剧院剧场',

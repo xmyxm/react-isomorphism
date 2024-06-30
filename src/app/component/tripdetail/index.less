@@ -1,19 +1,30 @@
 .tripdetail {
-	padding: 10px 15px;
+	padding: 20px 15px;
 
 	.title {
 		font-size: 20px;
+		font-weight: bold;
 	}
 
 	.detaillist {
-		margin-top: 10px;
+		margin-top: 30px;
 
 		.item {
-			margin-top: 10px;
+			line-height: 48px;
+			border-bottom: 1px dashed #f2f2f2;
+			cursor: pointer;
 
-			td {
-				text-align: left;
+			&:hover {
+				background-color: #f8f6f6;
 			}
+		}
+
+		.head-xh {
+			width: 40px;
+		}
+
+		th {
+			text-align: left;
 		}
 	}
 }
