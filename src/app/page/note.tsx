@@ -12,7 +12,7 @@ const store = createStore(initialState)
 export function Note() {
 	return (
 		<Provider store={store}>
-			<Head title="React SSR Little" />
+			<Head title="React Rematch SSR" />
 			<TripDetail />
 			<Foot />
 		</Provider>

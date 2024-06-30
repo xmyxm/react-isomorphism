@@ -4,7 +4,7 @@ import { queryWeatherInfo } from './base/weather'
 async function getWeatherInfo(params, ctx) {
 	try {
 		const weatherInfo = await queryWeatherInfo(params, ctx)
-		console.log('------------------------ 请求响应', JSON.stringify(weatherInfo || {}))
+		console.log('请求响应', JSON.stringify(weatherInfo || {}))
 		if (weatherInfo && weatherInfo.code === 200) {
 			return weatherInfo.data
 		}
