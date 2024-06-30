@@ -3,12 +3,13 @@
 	margin: 10px;
 	white-space: pre-wrap;
 
-	.title ,.temperature, .detaillist {
+	.title , .cityname,.temperature, .detaillist, .info-item {
 		display: flex;
 		align-items: center;
 	}
 
 	.title {
+		font-size: 20px;
 		justify-content: space-between;
 
 		.locicon {
@@ -18,22 +19,38 @@
 			background-image: url('../../assets/img/location.png');
 			background-repeat: no-repeat;
 			background-size: 100% 100%;
+			background-color: #e1e1e1;
+			margin-right: 5px;
 		}
 	}
 
 	.temperature {
 		height: 80px;
+		font-size: 48px;
+		font-weight: bold;
 		justify-content: center;
+
+		.unit {
+			font-size: 20px;
+			margin-left: 5px;
+			margin-top: -15px;
+		}
 	}
 
 	.detaillist {
 		justify-content: space-between;
-
+		font-size: 20px;
 		
+		.info-item {
+			height: 150px;
+			flex-direction: column;
+			justify-content: space-between;
+		}
 
 		.icon {
 			width: 40px;
 			height: 40px;
+			background-color: #e1e1e1;
 		}
 	}
 
