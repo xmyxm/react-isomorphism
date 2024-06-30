@@ -15,7 +15,7 @@ export default function Weather(): ReactElement | null {
 		station: { city },
 		publish_time,
 		weather: { temperature, rain, airpressure, humidity },
-		wind: { direct, power },
+		wind: { direct, degree, power },
 	} = weatherState.weatherInfo
 
 	return (
@@ -40,7 +40,7 @@ export default function Weather(): ReactElement | null {
 				<div className="info-item">
 					<div className="icon-qiya"></div>
 					<div className="text">气压</div>
-					<div className="text">{airpressure}hpa</div>
+					<div className="text">{airpressure > 999 ? '一' : `${airpressure}hpa`}</div>
 				</div>
 				<div className="info-item">
 					<div className="icon-shidu"></div>
@@ -49,7 +49,7 @@ export default function Weather(): ReactElement | null {
 				</div>
 				<div className="info-item">
 					<div className="icon-fengsu"></div>
-					<div className="text">{direct}</div>
+					<div className="text">{degree > 999 ? '一' : direct}</div>
 					<div className="text">{power}</div>
 				</div>
 			</div>

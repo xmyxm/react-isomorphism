@@ -72,6 +72,11 @@ config.module.rules.push(
 		generator: {
 			filename: 'img/[name].[hash:6][ext]',
 		},
+		parser: {
+			dataUrlCondition: {
+				maxSize: 100 * 1024,
+			},
+		},
 	},
 )
 config.plugins.push(
