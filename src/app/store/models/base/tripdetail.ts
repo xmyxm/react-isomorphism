@@ -1,24 +1,29 @@
 import { createModel } from '@rematch/core'
 import tripService from '../../service/trip'
+import { TripDetailStateType } from './type/tripdetaillistType'
 import type { NoteModel } from './modelType'
 
 export const tripDetail = createModel<NoteModel>()({
 	state: {
-		tripDetailList: null,
-	},
+		tripDetailInfo: null,
+	} as TripDetailStateType,
 	reducers: {
 		SET_DETAIL_LIST: (state, players) => {
 			return {
 				...state,
-				tripDetailList: players,
+				tripDetailInfo: players,
 			}
 		},
 	},
 	effects: dispatch => {
 		return {
 			async getTripDetailList(ctx): Promise<any> {
-				const detailList = await tripService.getTripDetailList(null, ctx)
-				dispatch.tripDetail.SET_DETAIL_LIST(detailList)
+				let params = {}
+				if (ctx && ctx.query) {
+					params = ctx.query
+				}
+				const detailInfo = await tripService.getTripDetailList(params, ctx)
+				dispatch.tripDetail.SET_DETAIL_LIST(detailInfo)
 			},
 		}
 	},

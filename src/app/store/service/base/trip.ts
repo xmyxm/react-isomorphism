@@ -14,7 +14,8 @@ export const queryTripMenuList = (_params, ctx) => {
 
 // 查询文旅详情
 export const queryTripDetailList = (_params, ctx) => {
-	const href = `${ctx ? 'http://127.0.0.1:8080' : ''}/api/whtripdetail`
+	const { id = '' } = _params
+	const href = `${ctx ? 'http://127.0.0.1:8080' : ''}/api/whtripdetail?id=${id}`
 	return axios({
 		url: href,
 		method: 'get',

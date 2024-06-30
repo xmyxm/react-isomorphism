@@ -1,13 +1,15 @@
 /* eslint-disable camelcase */
 import { ReactElement } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { IndexModel } from '../../store/models/base/modelType'
+import { Dispatch } from '../../store/index'
 import { TripMenuStateType, TripItemType } from '../../store/models/base/type/tripmenuType'
 import './index.less'
 
 export default function TripMenu(): ReactElement | null {
 	// @ts-ignore
 	const tripMenuState: TripMenuStateType = useSelector((state: IndexModel) => state.tripMenu)
+	const dispatch = useDispatch<Dispatch>()
 
 	if (!tripMenuState.tripMenuInfo) return null
 
@@ -19,7 +21,13 @@ export default function TripMenu(): ReactElement | null {
 			<div className="menulist">
 				{list.map(({ id, name }: TripItemType) => {
 					return (
-						<div key={id} className="name">
+						<div
+							key={id}
+							onClick={() => {
+								dispatch.tripMenu.goTodetail(id)
+							}}
+							className="name"
+						>
 							{name}
 						</div>
 					)

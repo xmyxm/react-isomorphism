@@ -1,6 +1,7 @@
 import { Provider } from 'react-redux'
 import Head from '../component/head'
 import Brand from '../component/brand'
+import TripDetail from '../component/tripdetail'
 import Foot from '../component/foot'
 import { createStore } from '../store/note'
 import '../style/note.less'
@@ -14,6 +15,7 @@ export function Note() {
 		<Provider store={store}>
 			<Head title="React SSR Little" />
 			<Brand name="Note" to="index" />
+			<TripDetail />
 			<Foot />
 		</Provider>
 	)

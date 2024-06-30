@@ -21,6 +21,9 @@ export const tripMenu = createModel<IndexModel>()({
 				const tripMenuInfo = await tripService.getTripMenuList(null, ctx)
 				dispatch.tripMenu.SET_MENU_LIST(tripMenuInfo)
 			},
+			goTodetail(id) {
+				window.open(`${location.origin}/note?id=${id}`)
+			},
 		}
 	},
 })
