@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, ReactElement } from 'react'
+import { useEffect, useState, ReactElement } from 'react'
 import Helmet from 'react-helmet'
 import { getDateNowText } from '../../util/util'
 import './index.less'

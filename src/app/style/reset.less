@@ -125,12 +125,6 @@ table {
 }
 
 body {
-	font-family:
-		Helvetica Neue,
-		PingFang SC,
-		Myriad Pro,
-		Hiragino Sans GB,
-		microsoft yahei !important;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	-webkit-touch-callout: none;
@@ -160,6 +154,18 @@ a:focus {
 	outline: 0;
 }
 
+@font-face {
+	font-family: 'MyCustomFont';
+	src: url('../assets/font/GEETYPEQingKongHeiGB.ttf')format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
 body {
 	background: #fff;
+	font-family: 'MyCustomFont', Helvetica Neue,
+		PingFang SC,
+		Myriad Pro,
+		Hiragino Sans GB,
+		microsoft yahei;
 }

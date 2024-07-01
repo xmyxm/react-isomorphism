@@ -63,6 +63,13 @@ config.module.rules.push(
 			filename: 'img/[name].[hash:6][ext]',
 		},
 	},
+	{
+        test: /\.(woff|woff2|eot|ttf|otf)$/i, // 匹配字体文件
+        type: 'asset/resource', // 使用 asset/resource 模块
+        generator: {
+          filename: 'fonts/[name].[hash:6][ext][query]', // 输出文件名和路径
+        },
+    },
 )
 config.devServer = {
 	headers: {
