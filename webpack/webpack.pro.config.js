@@ -79,12 +79,12 @@ config.module.rules.push(
 		},
 	},
 	{
-        test: /\.(woff|woff2|eot|ttf|otf)$/i, // 匹配字体文件
-        type: 'asset/resource', // 使用 asset/resource 模块
-        generator: {
-          filename: 'fonts/[name].[hash:6][ext][query]', // 输出文件名和路径
-        },
-    },
+		test: /\.(woff|woff2|eot|ttf|otf)$/i, // 匹配字体文件
+		type: 'asset/resource', // 使用 asset/resource 模块
+		generator: {
+			filename: 'fonts/[name].[hash:6][ext][query]', // 输出文件名和路径
+		},
+	},
 )
 config.plugins.push(
 	new CleanWebpackPlugin(), // 默认删除webpack output.path目录中的所有文件
