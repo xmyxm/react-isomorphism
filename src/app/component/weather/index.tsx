@@ -14,7 +14,7 @@ export default function Weather(): ReactElement | null {
 	const {
 		station: { city },
 		publish_time,
-		weather: { temperature, rain, airpressure, humidity },
+		weather: { temperature, rain, airpressure = 0, humidity },
 		wind: { direct, degree, power },
 	} = weatherState.weatherInfo
 
@@ -25,7 +25,7 @@ export default function Weather(): ReactElement | null {
 					<i className="locicon"></i>
 					{city}
 				</div>
-				<div className="uptime">更新时间:{publish_time.substring(publish_time.lastIndexOf(' '))}</div>
+				<div className="uptime">实况更新:{publish_time.substring(publish_time.lastIndexOf(' '))}</div>
 			</div>
 			<div className="temperature">
 				{temperature}

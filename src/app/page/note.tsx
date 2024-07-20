@@ -12,7 +12,7 @@ const store = createStore(initialState)
 export function Note() {
 	return (
 		<Provider store={store}>
-			<Head title="React Rematch SSR" />
+			<Head title="武汉旅游" />
 			<TripDetail />
 			<Foot />
 		</Provider>

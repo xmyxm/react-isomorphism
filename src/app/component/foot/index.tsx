@@ -11,7 +11,7 @@ export default function Foot(): ReactElement {
 					target="_blank"
 					href="https://github.com/xmyxm/react-isomorphism"
 				>
-					github link
+					React Rematch SSR（github link）
 				</a>
 			</footer>
 		</div>

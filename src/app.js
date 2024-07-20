@@ -152,7 +152,7 @@ app.use(router.allowedMethods())
 
 if (env === RUN_ENV.RC) {
 	httpServer = http.createServer(app.callback()).listen(serverPort)
-} else if (env === RUN_ENV.RC) {
+} else if (env === RUN_ENV.PRO) {
 	// ssl 文件
 	const keyPath = path.resolve(__dirname, `./server/config/ssl/www.qqweb.top.key`)
 	const pemPath = path.resolve(__dirname, `./server/config/ssl/www.qqweb.top.pem`)
@@ -165,3 +165,5 @@ if (env === RUN_ENV.RC) {
 	// 启动监听80端口
 	httpServer = http.createServer(app.callback()).listen(80)
 }
+
+print.info(`${getTime()} 启动服务器端口：${serverPort}`)

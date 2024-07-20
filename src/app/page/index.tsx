@@ -12,7 +12,7 @@ const store = createStore(initialState)
 export function Index() {
 	return (
 		<Provider store={store}>
-			<Head title="React Rematch SSR" />
+			<Head title="武汉天气" />
 			<Weather />
 			<TripMenu />
 			<Foot />

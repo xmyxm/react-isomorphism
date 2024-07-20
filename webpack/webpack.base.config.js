@@ -1,5 +1,5 @@
-const webpack = require('webpack')
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const BuildDonePlugin = require('./plugins/builddone')
 const packageFilePath = path.join(__dirname, '../dist/client')

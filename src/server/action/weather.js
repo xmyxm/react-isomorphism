@@ -2,8 +2,7 @@ const axios = require('axios')
 
 async function getWeather(ctx) {
 	// 国家气象中心：http://m.nmc.cn/publish/forecast/AHB/wuhan.html
-	// 武汉 57494、上海 58367、荆门 57377
-	const { cityid = 57494 } = ctx.query
+	const { code = 'bSpCz' } = ctx.query
 
 	const result = {
 		code: 200,
@@ -11,7 +10,7 @@ async function getWeather(ctx) {
 		msg: '成功',
 	}
 
-	const url = `http://www.nmc.cn/rest/real/${cityid}`
+	const url = `http://www.nmc.cn/rest/real/${code}`
 
 	// const headers = {
 	// 	Accept: 'application/json, text/javascript, */*; q=0.01',
