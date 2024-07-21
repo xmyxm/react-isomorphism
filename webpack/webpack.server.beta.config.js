@@ -1,8 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
-const packageFilePath = path.join(__dirname, '../dist/server')
 const BuildDonePlugin = require('./plugins/builddone')
+const packageFilePath = path.join(__dirname, '../dist/server')
 
 module.exports = {
 	entry: {

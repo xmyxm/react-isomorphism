@@ -1,7 +1,7 @@
 const TerserPlugin = require('terser-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin') //webpack插件，用于清除目录文件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin') //webpack插件，用于清除目录文件
 const config = require('./webpack.base.config.js')
 
 config.output.publicPath = '/'
