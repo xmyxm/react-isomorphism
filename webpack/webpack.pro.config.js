@@ -1,7 +1,6 @@
 const TerserPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin') //webpack插件，用于清除目录文件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const config = require('./webpack.base.config.js')
 
 config.output.publicPath = '/'
@@ -93,37 +92,36 @@ config.plugins.push(
 	new MiniCssExtractPlugin({
 		filename: 'css/[name].[contenthash].css',
 	}),
-	// 体积分析插件
-	new BundleAnalyzerPlugin(),
 )
 
 config.optimization = {
-    minimize: true,
-    minimizer: [new TerserPlugin()], // TerserPlugin 来压缩 JavaScript 代码
-    splitChunks: { // 将代码分割成不同的包，以便更好地利用缓存和并行加载
-      chunks: 'all',
-      minSize: 20000,
-      maxSize: 70000,
-      minChunks: 1,
-      maxAsyncRequests: 30,
-      maxInitialRequests: 30,
-      automaticNameDelimiter: '~',
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
-        },
-      },
-    },
-    runtimeChunk: 'single', // 将运行时代码拆分成单独的 chunk，以便更好地利用缓存
-    usedExports: true, // 启用 Tree Shaking，删除未使用的代码
-    concatenateModules: true, // 启用 Scope Hoisting，将所有模块放在一个闭包中，提高代码执行效率
-    sideEffects: true, // 标记无副作用的模块，以便更好地进行 Tree Shaking
-  }
+	minimize: true,
+	minimizer: [new TerserPlugin()], // TerserPlugin 来压缩 JavaScript 代码
+	splitChunks: {
+		// 将代码分割成不同的包，以便更好地利用缓存和并行加载
+		chunks: 'all',
+		minSize: 20000,
+		maxSize: 70000,
+		minChunks: 1,
+		maxAsyncRequests: 30,
+		maxInitialRequests: 30,
+		automaticNameDelimiter: '~',
+		cacheGroups: {
+			vendors: {
+				test: /[\\/]node_modules[\\/]/,
+				priority: -10,
+			},
+			default: {
+				minChunks: 2,
+				priority: -20,
+				reuseExistingChunk: true,
+			},
+		},
+	},
+	runtimeChunk: 'single', // 将运行时代码拆分成单独的 chunk，以便更好地利用缓存
+	usedExports: true, // 启用 Tree Shaking，删除未使用的代码
+	concatenateModules: true, // 启用 Scope Hoisting，将所有模块放在一个闭包中，提高代码执行效率
+	sideEffects: true, // 标记无副作用的模块，以便更好地进行 Tree Shaking
+}
 
 module.exports = config
