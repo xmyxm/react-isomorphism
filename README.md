@@ -19,7 +19,9 @@
 ### 二、笔记
 
 ```text
-1. 记录常用网站链接
+1. 本地调试 SSR 访问地址：http://localhost:8080/index (index、note 路由命中的才是服务端渲染)
+2. 本地调试 CSR 访问地址：http://localhost:8080/index.html
+2. 本地调试 CSR 访问地址：http://localhost:3000/index.html
 
 2. 记录日常学习笔记
 ```
