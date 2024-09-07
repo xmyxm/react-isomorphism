@@ -17,7 +17,7 @@ export const tripDetail = createModel<NoteModel>()({
 	},
 	effects: dispatch => {
 		return {
-			async getTripDetailList(ctx): Promise<any> {
+			async getTripDetailList(ctx?): Promise<any> {
 				let params = {}
 				if (ctx && ctx.query) {
 					params = ctx.query

@@ -1,17 +1,31 @@
 /* eslint-disable camelcase */
-import { ReactElement } from 'react'
-import { useSelector } from 'react-redux'
-import { NoteModel } from '../../store/models/base/modelType'
+import { ReactElement, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { TripDetailStateType, TripDetailItemType } from '../../store/models/base/type/tripdetaillistType'
+import { NoteModel } from '../../store/models/base/modelType'
+import { Dispatch } from '../../store/index'
 import './index.less'
 
 export default function TripDetail(): ReactElement | null {
 	// @ts-ignore
-	const tripMenuState: TripDetailStateType = useSelector((state: NoteModel) => state.tripDetail)
+	const tripDetailState: TripDetailStateType = useSelector((state: NoteModel) => state.tripDetail)
+	const dispatch = useDispatch<Dispatch>()
 
-	if (!tripMenuState.tripDetailInfo) return null
+	useEffect(() => {
+		// 这个函数会在组件首次渲染后执行一次
+		console.log('tripmenu 组件已挂载')
+		if (!tripDetailState.tripDetailInfo) {
+			dispatch.tripDetail.getTripDetailList()
+		}
+		// 可选的清理函数，通常用于清理副作用
+		return () => {
+			console.log('tripmenu 组件将要卸载')
+		}
+	}, []) // 空依赖数组，确保只在首次渲染时执行
 
-	const { title, renderConfig, list } = tripMenuState.tripDetailInfo
+	if (!tripDetailState.tripDetailInfo) return null
+
+	const { title, renderConfig, list } = tripDetailState.tripDetailInfo
 
 	return (
 		<div className="tripdetail">

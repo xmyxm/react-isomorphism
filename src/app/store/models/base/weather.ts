@@ -17,7 +17,7 @@ export const weather = createModel<IndexModel>()({
 	},
 	effects: dispatch => {
 		return {
-			async getWeatherInfo(ctx): Promise<any> {
+			async getWeatherInfo(ctx?): Promise<any> {
 				const weatherInfo = await weatherService.getWeatherInfo(null, ctx)
 				dispatch.weather.SET_WEATHER(weatherInfo)
 			},

@@ -17,7 +17,7 @@ export const tripMenu = createModel<IndexModel>()({
 	},
 	effects: dispatch => {
 		return {
-			async getTripMenuList(ctx): Promise<any> {
+			async getTripMenuList(ctx?): Promise<any> {
 				const tripMenuInfo = await tripService.getTripMenuList(null, ctx)
 				dispatch.tripMenu.SET_MENU_LIST(tripMenuInfo)
 			},

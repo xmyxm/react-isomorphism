@@ -1,9 +1,9 @@
 import { Provider } from 'react-redux'
-import Head from '../component/head'
 import Weather from '../component/weather'
 import TripMenu from '../component/tripmenu'
-import Foot from '../component/foot'
 import { createStore } from '../store/index'
+import Head from '../component/head'
+import Foot from '../component/foot'
 import '../style/index.less'
 
 const initialState = typeof window === 'object' ? (window as any).__INITIAL_STATE__ : {}

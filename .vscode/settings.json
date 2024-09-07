@@ -10,5 +10,6 @@
         "typescriptreact",
         "vue"
     ],
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "prettier.requireConfig": true
 }
